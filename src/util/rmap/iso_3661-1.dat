@@ -1,0 +1,226 @@
+376         | AD            | ANDORRA                                    |
+971         | AE            | UNITED ARAB EMIRATES                       |
+93          | AF            | AFGHANISTAN                                |
+1268        | AG            | ANTIGUA AND BARBUDA                        |
+1264        | AI            | ANGUILLA                                   |
+355         | AL            | ALBANIA                                    |
+374         | AM            | ARMENIA                                    |
+599         | AN            | NETHERLANDS ANTILLES                       |
+244         | AO            | ANGOLA                                     |
+672         | AQ            | ANTARCTICA                                 |
+54          | AR            | ARGENTINA                                  |
+684         | AS            | AMERICAN SAMOA                             |
+43          | AT            | AUSTRIA                                    |
+61          | AU            | AUSTRALIA                                  |
+297         | AW            | ARUBA                                      |
+994         | AZ            | AZERBAIJAN                                 |
+387         | BA            | BOSNIA AND HERZEGOWINA                     |
+1246        | BB            | BARBADOS                                   |
+880         | BD            | BANGLADESH                                 |
+32          | BE            | BELGIUM                                    |
+226         | BF            | BURKINA FASO                               |
+359         | BG            | BULGARIA                                   |
+973         | BH            | BAHRAIN                                    |
+257         | BI            | BURUNDI                                    |
+229         | BJ            | BENIN                                      |
+1441        | BM            | BERMUDA                                    |
+673         | BN            | BRUNEI DARUSSALAM                          |
+591         | BO            | BOLIVIA                                    |
+55          | BR            | BRAZIL                                     |
+1242        | BS            | BAHAMAS                                    |
+975         | BT            | BHUTAN                                     |
+267         | BW            | BOTSWANA                                   |
+375         | BY            | BELARUS                                    |
+501         | BZ            | BELIZE                                     |
+1289        | CA            | CANADA                                     |
+6722        | CC            | COCOS (KEELING) ISLANDS                    |
+243         | CD            | CONGO, THE DEMOCRATIC REPUBLIC OF THE      |
+236         | CF            | CENTRAL AFRICAN REPUBLIC                   |
+242         | CG            | CONGO                                      |
+41          | CH            | SWITZERLAND                                |
+225         | CI            | COTE D'IVOIRE                              |
+682         | CK            | COOK ISLANDS                               |
+56          | CL            | CHILE                                      |
+237         | CM            | CAMEROON                                   |
+86          | CN            | CHINA                                      |
+57          | CO            | COLOMBIA                                   |
+506         | CR            | COSTA RICA                                 |
+53          | CU            | CUBA                                       |
+238         | CV            | CAPE VERDE                                 |
+6724        | CX            | CHRISTMAS ISLAND                           |
+357         | CY            | CYPRUS                                     |
+420         | CZ            | CZECH REPUBLIC                             |
+49          | DE            | GERMANY                                    |
+253         | DJ            | DJIBOUTI                                   |
+45          | DK            | DENMARK                                    |
+1767        | DM            | DOMINICA                                   |
+1809        | DO            | DOMINICAN REPUBLIC                         |
+213         | DZ            | ALGERIA                                    |
+593         | EC            | ECUADOR                                    |
+372         | EE            | ESTONIA                                    |
+20          | EG            | EGYPT                                      |
+291         | ER            | ERITREA                                    |
+34          | ES            | SPAIN                                      |
+251         | ET            | ETHIOPIA                                   |
+358         | FI            | FINLAND                                    |
+679         | FJ            | FIJI                                       |
+500         | FK            | FALKLAND ISLANDS (MALVINAS)                |
+691         | FM            | MICRONESIA, FEDERATED STATES OF            |
+298         | FO            | FAROE ISLANDS                              |
+33          | FR            | FRANCE                                     |
+241         | GA            | GABON                                      |
+44          | GB            | UNITED KINGDOM                             |
+1473        | GD            | GRENADA                                    |
+995         | GE            | GEORGIA                                    |
+594         | GF            | FRENCH GUIANA                              |
+233         | GH            | GHANA                                      |
+350         | GI            | GIBRALTAR                                  |
+299         | GL            | GREENLAND                                  |
+220         | GM            | GAMBIA                                     |
+224         | GN            | GUINEA                                     |
+590         | GP            | GUADELOUPE                                 |
+240         | GQ            | EQUATORIAL GUINEA                          |
+30          | GR            | GREECE                                     |
+502         | GT            | GUATEMALA                                  |
+1671        | GU            | GUAM                                       |
+245         | GW            | GUINEA-BISSAU                              |
+592         | GY            | GUYANA                                     |
+852         | HK            | HONG KONG                                  |
+504         | HN            | HONDURAS                                   |
+385         | HR            | CROATIA (local name: Hrvatska)             |
+509         | HT            | HAITI                                      |
+36          | HU            | HUNGARY                                    |
+62          | ID            | INDONESIA                                  |
+353         | IE            | IRELAND                                    |
+972         | IL            | ISRAEL                                     |
+91          | IN            | INDIA                                      |
+964         | IQ            | IRAQ                                       |
+98          | IR            | IRAN (ISLAMIC REPUBLIC OF)                 |
+354         | IS            | ICELAND                                    |
+39          | IT            | ITALY                                      |
+1876        | JM            | JAMAICA                                    |
+962         | JO            | JORDAN                                     |
+81          | JP            | JAPAN                                      |
+254         | KE            | KENYA                                      |
+996         | KG            | KYRGYZSTAN                                 |
+855         | KH            | CAMBODIA                                   |
+686         | KI            | KIRIBATI                                   |
+269         | KM            | COMOROS                                    |
+1869        | KN            | SAINT KITTS AND NEVIS                      |
+850         | KP            | KOREA, DEMOCRATIC PEOPLE'S REPUBLIC OF     |
+82          | KR            | KOREA, REPUBLIC OF                         |
+965         | KW            | KUWAIT                                     |
+1345        | KY            | CAYMAN ISLANDS                             |
+856         | LA            | LAO PEOPLE'S DEMOCRATIC REPUBLIC           |
+961         | LB            | LEBANON                                    |
+1758        | LC            | SAINT LUCIA                                |
+417         | LI            | LIECHTENSTEIN                              |
+94          | LK            | SRI LANKA                                  |
+231         | LR            | LIBERIA                                    |
+266         | LS            | LESOTHO                                    |
+370         | LT            | LITHUANIA                                  |
+352         | LU            | LUXEMBOURG                                 |
+371         | LV            | LATVIA                                     |
+218         | LY            | LIBYAN ARAB JAMAHIRIYA                     |
+212         | MA            | MOROCCO                                    |
+377         | MC            | MONACO                                     |
+373         | MD            | MOLDOVA, REPUBLIC OF                       |
+261         | MG            | MADAGASCAR                                 |
+692         | MH            | MARSHALL ISLANDS                           |
+389         | MK            | MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF |
+223         | ML            | MALI                                       |
+95          | MM            | MYANMAR                                    |
+976         | MN            | MONGOLIA                                   |
+853         | MO            | MACAU                                      |
+596         | MQ            | MARTINIQUE                                 |
+222         | MR            | MAURITANIA                                 |
+1664        | MS            | MONTSERRAT                                 |
+356         | MT            | MALTA                                      |
+230         | MU            | MAURITIUS                                  |
+960         | MV            | MALDIVES                                   |
+265         | MW            | MALAWI                                     |
+52          | MX            | MEXICO                                     |
+60          | MY            | MALAYSIA                                   |
+258         | MZ            | MOZAMBIQUE                                 |
+264         | NA            | NAMIBIA                                    |
+687         | NC            | NEW CALEDONIA                              |
+227         | NE            | NIGER                                      |
+234         | NG            | NIGERIA                                    |
+505         | NI            | NICARAGUA                                  |
+31          | NL            | NETHERLANDS                                |
+47          | NO            | NORWAY                                     |
+977         | NP            | NEPAL                                      |
+674         | NR            | NAURU                                      |
+683         | NU            | NIUE                                       |
+64          | NZ            | NEW ZEALAND                                |
+968         | OM            | OMAN                                       |
+507         | PA            | PANAMA                                     |
+51          | PE            | PERU                                       |
+689         | PF            | FRENCH POLYNESIA                           |
+675         | PG            | PAPUA NEW GUINEA                           |
+63          | PH            | PHILIPPINES                                |
+92          | PK            | PAKISTAN                                   |
+48          | PL            | POLAND                                     |
+508         | PM            | ST. PIERRE AND MIQUELON                    |
+1787        | PR            | PUERTO RICO                                |
+970         | PS            | PALESTINIAN TERRITORY, OCCUPIED            |
+351         | PT            | PORTUGAL                                   |
+680         | PW            | PALAU                                      |
+595         | PY            | PARAGUAY                                   |
+974         | QA            | QATAR                                      |
+262         | RE            | REUNION                                    |
+40          | RO            | ROMANIA                                    |
+7           | RU            | RUSSIAN FEDERATION                         |
+250         | RW            | RWANDA                                     |
+966         | SA            | SAUDI ARABIA                               |
+677         | SB            | SOLOMON ISLANDS                            |
+248         | SC            | SEYCHELLES                                 |
+249         | SD            | SUDAN                                      |
+46          | SE            | SWEDEN                                     |
+65          | SG            | SINGAPORE                                  |
+290         | SH            | ST. HELENA                                 |
+386         | SI            | SLOVENIA                                   |
+421         | SK            | SLOVAKIA (Slovak Republic)                 |
+232         | SL            | SIERRA LEONE                               |
+378         | SM            | SAN MARINO                                 |
+221         | SN            | SENEGAL                                    |
+252         | SO            | SOMALIA                                    |
+597         | SR            | SURINAME                                   |
+239         | ST            | SAO TOME AND PRINCIPE                      |
+503         | SV            | EL SALVADOR                                |
+963         | SY            | SYRIAN ARAB REPUBLIC                       |
+268         | SZ            | SWAZILAND                                  |
+1649        | TC            | TURKS AND CAICOS ISLANDS                   |
+235         | TD            | CHAD                                       |
+228         | TG            | TOGO                                       |
+66          | TH            | THAILAND                                   |
+992         | TJ            | TAJIKISTAN                                 |
+690         | TK            | TOKELAU                                    |
+993         | TM            | TURKMENISTAN                               |
+216         | TN            | TUNISIA                                    |
+676         | TO            | TONGA                                      |
+670         | TP            | EAST TIMOR                                 |
+90          | TR            | TURKEY                                     |
+1868        | TT            | TRINIDAD AND TOBAGO                        |
+688         | TV            | TUVALU                                     |
+886         | TW            | TAIWAN, PROVINCE OF CHINA                  |
+255         | TZ            | TANZANIA, UNITED REPUBLIC OF               |
+380         | UA            | UKRAINE                                    |
+256         | UG            | UGANDA                                     |
+1201        | US            | UNITED STATES                              |
+598         | UY            | URUGUAY                                    |
+998         | UZ            | UZBEKISTAN                                 |
+379         | VA            | HOLY SEE (VATICAN CITY STATE)              |
+1784        | VC            | SAINT VINCENT AND THE GRENADINES           |
+58          | VE            | VENEZUELA                                  |
+1284        | VG            | VIRGIN ISLANDS (BRITISH)                   |
+1340        | VI            | VIRGIN ISLANDS (U.S.)                      |
+84          | VN            | VIET NAM                                   |
+678         | VU            | VANUATU                                    |
+681         | WF            | WALLIS AND FUTUNA ISLANDS                  |
+685         | WS            | SAMOA                                      |
+967         | YE            | YEMEN                                      |
+381         | YU            | YUGOSLAVIA                                 |
+27          | ZA            | SOUTH AFRICA                               |
+260         | ZM            | ZAMBIA                                     |
+263         | ZW            | ZIMBABWE                                   |

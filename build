@@ -1,0 +1,5 @@
+. ./cflags.opt
+./autogen.sh
+echo "Running: make"
+make clean
+make

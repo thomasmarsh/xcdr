@@ -1,0 +1,46 @@
+<!ELEMENT and ( equal, or ) >
+
+<!ELEMENT attrib EMPTY >
+<!ATTLIST attrib name NMTOKEN #REQUIRED >
+<!ATTLIST attrib value NMTOKEN #IMPLIED >
+
+<!ELEMENT condition ( and | equal | in-seq )* >
+
+<!ELEMENT count EMPTY >
+
+<!ELEMENT equal EMPTY >
+<!ATTLIST equal attrib NMTOKEN #IMPLIED >
+<!ATTLIST equal name NMTOKEN #IMPLIED >
+<!ATTLIST equal value NMTOKEN #REQUIRED >
+
+<!ELEMENT in ( attrib | param )* >
+
+<!ELEMENT in-seq EMPTY >
+<!ATTLIST in-seq attrib NMTOKEN #REQUIRED >
+<!ATTLIST in-seq param NMTOKEN #REQUIRED >
+
+<!ELEMENT or ( equal+ ) >
+
+<!ELEMENT order ( attrib+ ) >
+<!ATTLIST order dir NMTOKEN #REQUIRED >
+
+<!ELEMENT out ( attrib | count )* >
+
+<!ELEMENT param EMPTY >
+<!ATTLIST param name NMTOKEN #REQUIRED >
+<!ATTLIST param type CDATA #REQUIRED >
+
+<!ELEMENT query ( condition | in | order | out | set )* >
+<!ATTLIST query distinct NMTOKEN #IMPLIED >
+<!ATTLIST query limit NMTOKEN #IMPLIED >
+<!ATTLIST query name NMTOKEN #REQUIRED >
+<!ATTLIST query table NMTOKEN #FIXED "CDR_Raw" >
+<!ATTLIST query type NMTOKEN #REQUIRED >
+
+<!ELEMENT query-repository ( repository+ ) >
+<!ATTLIST query-repository model NMTOKEN #REQUIRED >
+
+<!ELEMENT repository ( query+ ) >
+<!ATTLIST repository name NMTOKEN #REQUIRED >
+
+<!ELEMENT set ( attrib ) >

@@ -1,0 +1,67 @@
+The following process will exist on a system running the XCDR Environment:
+
+
+-----------------------------------------------------------------------------
+ZONE    EXECUTABLE	DESCRIPTION
+------- --------------- -----------------------------------------------------
+BASE
+	mysqld		The MySQL database (Postgres or Oracle may be used,
+			but are not optimized for speed)
+
+	xcdrd		The xcdrd is the XCDR Daemon. It is responsible for
+			scheduling tasks, and coordinating IPC via the
+			database.
+
+	xcdrmon		The XCDR Monitoring engine; instantiated by the xcdrd.
+
+
+-----------------------------------------------------------------------------
+ZONE    EXECUTABLE	DESCRIPTION
+------- --------------- -----------------------------------------------------
+READER
+
+	xcdrReader	The reader executable; the XCDR Readers are
+			instantiated by xcdrd and be provided their id. Based
+			upon their configuration in the database they will
+			dynamically load thier required reader mode library:
+
+				- localfile.so		Local File Reader
+				- updserver.so		Cisco CDR's
+				- cdrserver.so		Quintum CDR Server
+
+			They will also load the the necessary parsers (for
+			extraction of timestamps and call ids):
+
+				- sonus_reader.so	Sonus GSX
+				- mvam_reader.so	Lucent MVAM TNT
+				- dco_reader.so		Siemens DCO
+				- cisco_reader.so	Cisco 5300
+				- quintum_reader.so	Quintum Tenor
+				- vocaltec_reader.so	VocalTec
+
+-----------------------------------------------------------------------------
+ZONE    EXECUTABLE	DESCRIPTION
+------- --------------- -----------------------------------------------------
+MEDIATOR
+
+	xcdrMediator	The mediator executable; like the readers, it will be
+			instantiated by the xcdrd and loaded with the correct
+			mediator module:
+
+				- sonus.so		Sonus GSX
+				- mvam.so		Lucent MVAM TNT
+				- dco.so		Siemens DCO
+				- cisco.so		Cisco 5300
+				- quintum.so		Quintum Tenor
+				- vocaltec.so		VocalTec
+
+-----------------------------------------------------------------------------
+ZONE    EXECUTABLE	DESCRIPTION
+------- --------------- -----------------------------------------------------
+BILLING
+
+	xcdrEngine	The billing engine is instantiated by xcdrd. It
+			will load billing modules as described by the service
+			types necessary according to gateway. Records will be
+			placed in the CDR_Billed table for any post-processing
+			(export, taxation, invoicing, etc).

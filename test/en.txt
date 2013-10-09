@@ -1,0 +1,11 @@
+root:table
+{
+  usage:string { "Usage: xcdr_reader <id>" }
+  version:string { "0.5a" }
+
+  errorcodes:table
+  {
+    envhome:string "The environment variable $HOME is not set."
+    wronguser:string "The user does not appear to be 'xcdr'."
+  }
+}

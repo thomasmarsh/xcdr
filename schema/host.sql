@@ -1,0 +1,11 @@
+DROP TABLE IF EXISTS Host;
+CREATE TABLE IF NOT EXISTS Host
+(
+	i_host		INT UNSIGNED NOT NULL,
+	hostname	VARCHAR(255) NOT NULL DEFAULT "localhost",
+	PRIMARY KEY HostKey (i_host)
+) TYPE=InnoDB;
+
+INSERT INTO Host VALUES
+	(0, "UNUSED"),
+	(1, "localhost");

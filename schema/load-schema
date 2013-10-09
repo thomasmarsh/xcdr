@@ -1,0 +1,11 @@
+#!/bin/bash
+
+MODULES="acl cdr customer destination flags host mediator node rate reader tariff task timezone"
+
+MYSQL="mysql -uxcdr -pxcdr xcdr"
+
+for module in $MODULES
+do
+	echo "Loading schema: $module"
+	$MYSQL < $module.sql
+done

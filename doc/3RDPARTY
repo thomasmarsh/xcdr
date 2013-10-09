@@ -1,0 +1,27 @@
+A list of third-part software that needs to be bundled with XCDR:
+
+<dependency>
+  <section name="web">
+    <product name="apache"/>
+    <product name="php"/>
+    <product name="jpGraph"/>
+    <product name="libGD"/>
+  </section>
+
+  <section name="database">
+    <product name="MySQL"/>
+  </section>
+
+  <section name="telephony">
+    <product name="sip"/>
+    <product name="radius"/>
+  </section>
+
+  <section name="xml">
+    <product name="xml4c"/>
+  </section>
+
+  <section name="i18m">
+    <product name="icu"/>
+  </section>
+</dependency>

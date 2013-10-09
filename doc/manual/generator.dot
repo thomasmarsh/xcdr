@@ -1,0 +1,6 @@
+digraph Generator
+{
+	input_file -> Reader;
+	Reader -> Mediator;
+	Mediator -> Engine;
+}

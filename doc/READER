@@ -1,0 +1,45 @@
+FileReader
+----------
+
+The file reader needs the following information to run:
+
+	- location of the lockfile
+	- connection details for the database
+	- location of the input file
+	- node id for which we are processing
+	- whether this is primary or secondary file
+
+Basic program flow is:
+
+	check lock file:
+		if available, or no lock exists:
+			create lock
+		else
+			exit with warning "reader is already running"
+	
+	open input file read-only
+
+	if error:
+		exit with warning "cannot open file"
+
+	open database connection (or exit with warning if fails)
+
+	get reader details (node id, primary/secondary, etc)
+
+	get last retrieved line for current file from database
+
+	rollforward to current line
+
+	until system exit called:
+
+		read N lines (defined in reader config)
+
+		for each line:
+			insert into CDR_RAW table marked status = 'T'
+
+		update last retrieved line in database
+
+		mark CDR_RAW table with status = 'R'
+
+	exit
+

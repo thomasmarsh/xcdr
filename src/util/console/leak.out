@@ -1,0 +1,20 @@
+# starting Thu Mar 27 19:47:22 2003
+# memory overrun protection of 4 Bytes with magic 0xAABBCCDD
+# initializing new memory with 0xAA
+# sweeping deleted memory with 0xEE
+# aborts on OVERWRITE_MEMORY 
+# thread save
+# internal buffer now 32768
+# internal buffer now 65536
+# internal buffer now 131072
+# internal buffer now 262144
+# finished Thu Mar 27 19:47:54 2003
+# LeakReport
+# from new @ |      size  # Pointer Addr
+L 0x401b1be0          24  # 0x806a1c8
+L 0x40d949e1         960  # 0x806a618
+L 0x40d949e1        3264  # 0x806a9e0
+L 0x40d949e1        4104  # 0x807dee8
+L 0x40d949e1        2440  # 0x807eef8
+# total allocation requests: 258034 ; max. mem used 2775 kBytes
+# leak  10792 Bytes	:-(

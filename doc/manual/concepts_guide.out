@@ -1,0 +1,31 @@
+\BOOKMARK [0][-]{title.0}{Title Page}{}
+\BOOKMARK [0][-]{chapter*.1}{Preface}{}
+\BOOKMARK [1][-]{section.0.1}{What is XCDR?}{chapter*.1}
+\BOOKMARK [1][-]{section.0.2}{History}{chapter*.1}
+\BOOKMARK [1][-]{section.0.3}{The Documentation}{chapter*.1}
+\BOOKMARK [2][-]{subsection.0.3.1}{Where to get the latest version of this guide}{section.0.3}
+\BOOKMARK [2][-]{subsection.0.3.2}{Conventions}{section.0.3}
+\BOOKMARK [0][-]{chapter.1}{Highlevel Architecture Description}{}
+\BOOKMARK [1][-]{section.1.1}{Overview of XCDR}{chapter.1}
+\BOOKMARK [1][-]{section.1.2}{Collection}{chapter.1}
+\BOOKMARK [1][-]{section.1.3}{Authorization}{chapter.1}
+\BOOKMARK [1][-]{section.1.4}{Routing}{chapter.1}
+\BOOKMARK [1][-]{section.1.5}{Mediation}{chapter.1}
+\BOOKMARK [1][-]{section.1.6}{Rating}{chapter.1}
+\BOOKMARK [1][-]{section.1.7}{Error Handling}{chapter.1}
+\BOOKMARK [1][-]{section.1.8}{Monitoring}{chapter.1}
+\BOOKMARK [1][-]{section.1.9}{Reporting}{chapter.1}
+\BOOKMARK [1][-]{section.1.10}{Where to Go From Here}{chapter.1}
+\BOOKMARK [0][-]{chapter.2}{Collection}{}
+\BOOKMARK [1][-]{section.2.1}{The Reader}{chapter.2}
+\BOOKMARK [1][-]{section.2.2}{Interaction with the Mediator}{chapter.2}
+\BOOKMARK [1][-]{section.2.3}{FileReaader}{chapter.2}
+\BOOKMARK [1][-]{section.2.4}{CDRServer}{chapter.2}
+\BOOKMARK [1][-]{section.2.5}{RADIUSReader}{chapter.2}
+\BOOKMARK [1][-]{section.2.6}{Mediator}{chapter.2}
+\BOOKMARK [1][-]{section.2.7}{Engine}{chapter.2}
+\BOOKMARK [1][-]{section.2.8}{Performance}{chapter.2}
+\BOOKMARK [0][-]{chapter.3}{Figures}{}
+\BOOKMARK [0][-]{appendix*.3}{Tables}{}
+\BOOKMARK [0][-]{appendix*.4}{Algorithms}{}
+\BOOKMARK [0][-]{appendix*.5}{Index}{}

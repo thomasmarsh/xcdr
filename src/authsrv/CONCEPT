@@ -1,0 +1,57 @@
+INTRODUCTION
+
+The AuthServer is designed as an abstraction for Authentication and Authorization
+services. It provides a central repository for logon/logoff events, fraud detection
+for accounts using the system (no synchronous logins), as well as call leg correlation.
+
+It provides all services via a TCP control language, for which proxies can be
+be implemented, allowing implementation of RADIUS and SIP front ends.
+
+In all protocol examples, messages sent by the client are prefixed by '>>' and responses
+from the server have no prefix. Actual clients will not print the '>> prefix.
+
+
+PROTOCOL
+
+The protocol should be familiar enough on the basis of other internet services like
+SMTP or HTTP. The basic syntax for a command is:
+
+>>	<CMD> <arg1> <arg2> ... <argN>
+
+Some commands will take attribute/value arguments as subsequent commands. In this case
+the arguments are passed, separated by newlines, and terminated by a '.'. For example:
+
+>>	ACC
+	201 RECV accounting (terminate by '.')
+>>	User-Name='10.54.1.42'
+>>	h323-remote-address='10.54.1.43'
+>>	[...]
+>>	h323-ivr-out='subscriber:coin'
+>>	.
+	104 ACK accounting received
+
+Responses, as seen in the above example, are in the standard format:
+
+	<CODE> <TOKEN> <user message>
+
+For example:
+
+	104 ACK accounting received.
+
+
+SHARED MEMORY
+
+In addition to the client/server model, a client could use the authsrv's shared memory
+directly. This requires the appropriate registration sequence:
+
+	[connection to authsrv via UNIX socket]
+	110 HELO XCDR authsrv at 10.1.5.5
+>>	REG 10.1.5.6
+	210 ACK 10.1.5.6 is a subscriber
+>>	SHMID
+	230 SHMID 0x015295892
+>>	QUIT
+	210 BYE
+	[connection closed]
+
+

@@ -1,0 +1,55 @@
+ACCESS CONTROL LISTS
+--------------------
+
+The structure of the access system is divided in into:
+
+	- Identity management
+
+	- Group association
+
+	- Privilege management
+
+
+CREATE TABLE User
+(
+	i_user		INT UNSIGNED,
+	name		VARCHAR(32),
+	description	VARCHAR(64)
+);
+
+CREATE TABLE Group
+(
+	i_group		INT UNSIGNED,
+	name		VARCHAR(32),
+	description	VARCHAR(64)
+);
+
+CREATE TABLE ACL
+(
+	i_acl		INT UNSIGNED,
+	i_permission	INT UNSIGNED,
+);
+
+CREATE TABLE Permission
+(
+);
+
+--------------------------------------------------
+--
+-- Sample tables using ACL's
+--
+--------------------------------------------------
+
+CREATE TABLE Rate
+(
+	i_rate	INT UNSIGNED,
+	i_price INT UNSIGNED,
+);
+
+CREATE TABLE Tariff
+(
+	i_tariff	INT UNSIGNED,
+	i_acl		INT UNSIGNED,
+	i_parent	INT UNSIGNED,
+	description	VARCHAR(32)
+);

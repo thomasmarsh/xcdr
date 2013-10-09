@@ -1,0 +1,40 @@
+Hardware Requirements
+---------------------
+
+There are a number of variables involved when deciding upon your :
+
+-----------------------------------------------------------------------------
+STORAGE
+-----------------------------------------------------------------------------
+
+Storage requirements vary based upon how much data you want to buffer in the
+event of an outage, and how many months of data you wish to store on the
+Central Store. Recommended storage amounts are:
+
+	Mediation Instance:	180 GB
+
+	Billing Instance:	180 GB
+
+	Central Store:		1 TB
+
+Hot-swappable RAID is highly desireable; especially on machines where CDR
+traffic is held locally on the Mediation instance.
+
+
+-----------------------------------------------------------------------------
+MEMORY
+-----------------------------------------------------------------------------
+
+The Mediation and Billing instances can survive on 256 MB of RAM but will use
+everything you can provide. The recommended amount is 1 GB at a minimum, and
+will enable large insert buffers.
+
+
+-----------------------------------------------------------------------------
+CPU
+-----------------------------------------------------------------------------
+
+The development system is an AMD 2000+ (1.56 Ghz) single CPU machine. Ideally
+each Mediation and Billing instance should have two CPU's. Depending on the
+desired thoroughput, you may wish to increase this to 4- or 8-way
+configurations.

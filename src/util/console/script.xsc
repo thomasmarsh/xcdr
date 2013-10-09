@@ -1,0 +1,56 @@
+#!/home/xcdr/bin/xcdr_rater_console $*
+
+#===========================================================================
+#
+# XCDR, Version 1.0
+#
+# Copyright (c) 2003 Thomas D. Marsh. All rights reserved.
+#
+#===========================================================================
+#
+# Redistribution and use is subject to agreement with the author(s). See
+# the doc/LICENSE file for more details.
+#
+# THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
+# WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+# OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED.  IN NO EVENT SHALL THE APACHE SOFTWARE FOUNDATION OR
+# ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF
+# USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+# ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+# OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+# OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+# SUCH DAMAGE.
+#
+#==========================================================================
+#
+# $Source$
+# $Revision$
+# $Date$
+# $Author$
+#
+#--------------------------------------------------------------------------
+#
+# $Log$
+#
+#==========================================================================
+
+
+#--------------------------------------------------------------------------
+#
+# LOAD CSV FILES
+#
+#--------------------------------------------------------------------------
+
+#load timezone	data/timezone.txt	#type=csv;
+#load country	data/country.txt	#type=csv;
+#load province	data/state.txt	#type=csv;
+#load lata	data/lata.txt		#type=csv;
+#load ocn	data/ocn.txt		#type=csv;
+
+(populate)
+(rate '("15124598814" "15124598815" "no" "no" 125
+	((1 "RAMBLER")
+	 (2 "124.53.35.12"))))

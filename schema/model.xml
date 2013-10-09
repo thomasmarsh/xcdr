@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE  model  SYSTEM  "file://localhost//home/tmarsh/cvs/xcdr/schema/model.dtd">
+<model name="XCDR" version="0.5" adaptor="default">
+
+  <!-- TYPEDEF PROFILES  -->
+
+  <typedef>
+    <profile name="uint"
+	     type="unsigned int"
+	     externalType="INT"
+	     sign="unsigned"
+	     null="false"/>
+    <profile name="icall"
+	     type="std::string"
+	     externalType="CHAR"
+	     width="16"
+	     sign="unsigned"
+	     null="false"/>
+    <profile name="timestamp"
+	     type="TimeStamp"
+	     externalType="TIMESTAMP"
+	     null="true"/>
+    <profile name="datetime"
+	     type="DateTime"
+	     externalType="DATETIME"
+	     null="false"/>
+    <profile name="bool"
+	     type="bool"
+	     externalType="TINYINT"
+	     width="1"
+	     default="0"
+	     null="false"/>
+    <profile name="string"
+	     type="std::string"
+	     externalType="VARCHAR"
+	     width="255"
+	     null="false"/>
+    <profile name="offset"
+	     type="off_t"
+	     externalType="BIGINT"
+	     sign="unsigned"
+	     null="false"/>
+  </typedef>
+
+  <!-- ===================================================================
+    ==
+    == ACL TABLES
+    ==
+    ====================================================================== -->
+
+  <entity name="User" type="InnoDB">
+    <attrib name="i_user"	profile="uint"/>
+    <attrib name="i_acl_proto"	profile="uint"/>
+
+    <populate>
+      <record><a>0</a><a>0</a></record>
+    </populate>
+  </entity>
+
+  <entity name="Login" type="InnoDB">
+    <attrib name="i_user"	profile="uint"/>
+    <attrib name="login"	profile="string" width="32"/>
+    <attrib name="password"	profile="string" width="32" encrypt="true"/>
+    <attrib name="email"	profile="string" width="128"/>
+    <attrib name="name"		profile="string" width="128"/>
+    <attrib name="description"	profile="string" width="64"/>
+    <populate>
+      <record>
+	<a>0</a>
+	<a>'root'</a>
+	<a>encrypt('root')</a>
+	<a>'thomas.marsh@seznam.cz'</a>
+	<a>'Thomas D. Marsh'</a>
+	<a>'Root Account'</a>
+      </record>
+    </populate>
+  </entity>
+
+  <entity name="UserGroup" type="InnoDB">
+    <attrib name="i_group"	profile="uint"/>
+    <attrib name="i_acl_proto"	profile="uint"/>
+    <attrib name="name"		profile="string" width="32"/>
+    <populate>
+      <record>
+	<a>0</a>
+	<a>0</a>
+	<a>'root'</a>
+      </record>
+    </populate>
+  </entity>
+
+  <entity name="Privilege" type="InnoDB">
+    <attrib name="i_privilege"	profile="uint"/>
+    <attrib name="description"	profile="string" width="64"/>
+    <populate>
+      <record><a>0</a><a>'read'</a></record>
+      <record><a>1</a><a>'lookup'</a></record>
+      <record><a>2</a><a>'insert'</a></record>
+      <record><a>3</a><a>'delete'</a></record>
+      <record><a>4</a><a>'write'</a></record>
+      <record><a>5</a><a>'lock'</a></record>
+      <record><a>6</a><a>'acl'</a></record>
+    </populate>
+  </entity>
+
+  <entity name="ACL" type="InnoDB">
+    <attrib name="i_acl"	profile="uint"/>
+    <attrib name="i_user"	profile="uint" null="true"/>
+    <attrib name="i_group"	profile="uint" null="true"/>
+    <attrib name="i_privilege"	profile="uint"/>
+  <!--
+        (0, 0, 0, NULL),
+        (0, 1, 0, NULL),
+        (0, 2, 0, NULL),
+        (0, 3, 0, NULL),
+        (0, 4, 0, NULL),
+        (0, 5, 0, NULL),
+        (0, 0, NULL, 0),
+        (0, 1, NULL, 0),
+        (0, 2, NULL, 0),
+        (0, 3, NULL, 0),
+        (0, 4, NULL, 0),
+        (0, 5, NULL, 0);
+   -->
+  </entity>
+
+  <!-- ===================================================================
+    ==
+    == CUstomer TABLES
+    ==
+    ====================================================================== -->
+
+  <entity name="Customer" type="InnoDB">
+    <attrib name="i_customer"	profile="uint"/>
+    <attrib name="name"		profile="string"/>
+    <populate>
+      <record><a>0</a><a>'Default Customer'</a></record>
+    </populate>
+  </entity>
+
+
+  <!-- ===================================================================
+    ==
+    == CDR TABLES
+    ==
+    ====================================================================== -->
+
+  <entity name="CDR_Types" type="InnoDB">
+    <attrib name="i_type"	profile="uint"/>
+    <attrib name="name"		profile="string"/>
+    <populate>
+      <record><a>0</a><a>'UNKNOWN'</a></record>
+      <record><a>1</a><a>'VERSION'</a></record>
+      <record><a>2</a><a>'REBOOT'</a></record>
+      <record><a>3</a><a>'SWITCHOVER'</a></record>
+      <record><a>4</a><a>'START'</a></record>
+      <record><a>5</a><a>'STOP'</a></record>
+      <record><a>6</a><a>'ATTEMPT'</a></record>
+      <record><a>7</a><a>'INTERMEDIATE'</a></record>
+    </populate>
+  </entity>
+
+  <entity name="CDR_Raw" type="InnoDB">
+    <attrib name="i_reader"	profile="uint"/>
+    <attrib name="i_node"	profile="uint"/>
+    <attrib name="i_node_type"	profile="uint"/>
+    <attrib name="i_cdr_type"	profile="uint"/>
+    <attrib name="t_timstamp"	profile="timestamp"/>
+    <attrib name="commited"	profile="bool"/>
+    <attrib name="call_id"	profile="string" width="64"/>
+    <attrib name="cdr_time"	profile="datetime"/>
+    <attrib name="cdr_offset"	profile="offset"/>
+  </entity>
+
+  <entity name="CDR_Mediated" type="InnoDB">
+    <attrib name="i_call"	profile="icall"/>
+    <attrib name="call_id"	profile="string" width="64"/>
+    <attrib name="i_type_node"	profile="uint"/>
+    <attrib name="i_ingress"	profile="uint"/>
+    <attrib name="start_time"	profile="datetime"/>
+    <attrib name="stop_time"	profile="datetime"/>
+    <attrib name="setup_seconds" profile="uint"/>
+    <attrib name="elapsed_seconds" profile="uint"/>
+    <attrib name="bytes_sent"	profile="uint"/>
+    <attrib name="bytes_rcvd"	profile="uint"/>
+    <attrib name="cli"		profile="string" width="32"/>
+    <attrib name="cld"		profile="string" width="32"/>
+    <attrib name="payphone"	profile="bool"/>
+    <attrib name="prison"	profile="bool"/>
+    <attrib name="billable"	profile="bool"/>
+  </entity>
+
+  <!-- ===================================================================
+    ==
+    == CDR TABLES
+    ==
+    ====================================================================== -->
+
+  <entity name="DestinationFlags" type="InnoDB">
+    <attrib name="destination"	profile="string" width="15"/>
+    <attrib name="i_flag"	profile="uint"/>
+    <attrib name="value"	profile="string" width="10"/>
+  </entity>
+
+  <entity name="CallFlags" type="InnoDB">
+    <attrib name=""	profile=""/>
+    <populate>
+      <record>
+	<a></a>
+      </record>
+    </populate>
+  </entity>
+
+  <entity name="" type="InnoDB">
+    <attrib name=""	profile=""/>
+    <populate>
+      <record>
+	<a></a>
+      </record>
+    </populate>
+  </entity>
+
+
+</model>

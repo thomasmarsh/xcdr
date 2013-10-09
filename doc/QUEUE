@@ -1,0 +1,38 @@
+The tables CDR_RAW, and CDR are queues which will be cleared when processed.
+
+The tables both have a status column which can have values:
+
+	'R'	READY
+	'M'	MARKED FOR PROCESSING (READING)
+	'T'	TRANSACTIONAL (INSERTION)
+
+When the Handler wants to process records in CDR_RAW the following pseudo-
+code shows the logic involved in maintining the records across queue
+boundaries:
+
+	UPDATE CDR_RAW SET status = 'M' WHERE manufacturer = <gw_mfg>
+
+	SELECT * FROM CDR_RAW WHERE status = 'M' and manufacturer = <gw_mfg>
+
+	for each record:
+
+		parse record
+
+		mediate record
+
+		insert mediated record into CDR with status = 'T'
+	
+	if catch exception:
+
+		DELETE FROM CDR WHERE status = 'T' and manufacturer = <gw_mfg>
+
+		UPDATE CDR_RAW SET status = 'R' WHERE status = 'M' and manufacturer = <gw_mfg>
+
+	UPDATE CDR SET status = 'R' WHERE status = 'T' AND manufacturer = <gw_mfg>
+
+	DELETE FROM CDR_RAW WHERE status = 'M' AND manufacturer = <gw_mfg>
+
+
+Not shown here is the use of the QueueManager which assigns a unique identifier
+to each queue transfer to prevent simultaneous Handlers from stepping on each
+others' feet.

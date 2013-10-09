@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE  model  SYSTEM  "file://localhost//home/tmarsh/cvs/xcdr/schema/model.dtd">
+<model name="XCDR" version="0.5" adaptor="default">
+
+  <!-- TYPEDEF PROFILES  -->
+
+  <typedef>
+    <profile name="uint"
+	     type="unsigned int"
+	     externalType="INT"
+	     unsign="true"
+	     null="false"/>
+    <profile name="timestamp"
+	     type="TimeStamp"
+	     externalType="TIMESTAMP"
+	     null="true"/>
+    <profile name="datetime"
+	     type="DateTime"
+	     externalType="DATETIME"
+	     null="false"/>
+    <profile name="bool"
+	     type="bool"
+	     externalType="TINYINT"
+	     width="1"
+	     default="0"
+	     null="false"/>
+    <profile name="string"
+	     type="std::string"
+	     externalType="VARCHAR"
+	     width="255"
+	     null="false"/>
+    <profile name="offset"
+	     type="off_t"
+	     externalType="BIGINT"
+	     unsign="true"
+	     null="false"/>
+  </typedef>
+
+  <!-- TABLE: CDR_Raw --> 
+
+  <entity name="CDR_Raw" type="InnoDB">
+    <attrib name="i_reader"	profile="uint"/>
+    <attrib name="i_node"	profile="uint"/>
+    <attrib name="i_node_type"	profile="uint"/>
+    <attrib name="i_cdr_type"	profile="uint"/>
+    <attrib name="t_timstamp"	profile="timestamp"/>
+    <attrib name="commited"	profile="bool"/>
+    <attrib name="call_id"	profile="string" width="64"/>
+    <attrib name="cdr_time"	profile="datetime"/>
+    <attrib name="cdr_offset"	profile="offset"/>
+  </entity>
+
+  <relation>
+  </relation>
+</model>

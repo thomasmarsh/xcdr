@@ -1,0 +1,22 @@
+- SetContext should preserve current and restore if there is an error
+
+- add commands:
+	- add party <party_id>
+	- add tariff <tariff_id> <party_id>
+	- add activity <activity_id> <party_id> <tariff_id>
+	...
+
+
+- rate command
+	interactively build a Query object and print out the Response of Rater::charge()
+
+
+- parse commands better:
+
+	cmd-list ::= (cmd ; cmd-list)
+
+	cmd ::= word (arg-list) 
+
+	arg-list ::= (arg arg-list)
+
+	arg ::= (static | "quoted")

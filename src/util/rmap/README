@@ -1,0 +1,2 @@
+In order to perform a sample run, startup the database and run dump_lerg.
+This will create the /tmp/lerg.txt. Then run ./xcdr_rmap

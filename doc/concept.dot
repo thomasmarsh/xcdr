@@ -1,0 +1,32 @@
+digraph Concept
+{
+	subgraph Billing
+	{
+		style=filled;
+		color=blue;
+		Reader -> Mediator -> Engine;
+	}
+
+	subgraph BatchUpdate
+	{
+		EngineUpdate -> MediatorUpdate -> ReaderUpdate;
+	}
+
+	subgraph UI
+	{
+		Web -> Invoice;
+		Web -> Statistics;
+		Web -> Rates;
+	}
+	Engine -> Aggregation;
+
+	Taxation -> Aggregation;
+	Aggregation -> Taxation;
+
+	EngineUpdate -> Engine;
+	MediatorUpdate -> Mediator;
+	ReaderUpdate -> Reader;
+
+	Updater -> EngineUpdate;
+	Web -> Updater;
+}

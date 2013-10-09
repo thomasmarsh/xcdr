@@ -1,0 +1,49 @@
+digraph G
+{
+	input_file -> Reader [label="read"];
+	input_file -> Mediator [label="read"];
+
+	Reader -> CDR_Raw [label="insert"];
+	CDR_Raw -> Reader [label="select count(*)"];
+	Reader -> PARSE_ERR [label="insert"];
+	ReaderProfile -> Reader [label="select"];
+	Nodes -> Reader [label="select"];
+
+	Nodes -> Mediator [label="select"];
+	MediatorProfile -> Mediator [label="select"];
+	CDR_Raw -> Mediator [label="find stops"];
+	LOOKUP -> Mediator [label="select"];
+	Mediator -> CDR_Mediated [label="insert"];
+	Mediator -> PARSE_ERR [label="insert"];
+
+	Allocator -> CDR_Mediated [label="set"];
+	CDR_Mediated -> Allocator [label="select"];
+
+	CDR_Mediated -> Engine [label="select"];
+	CONFIG -> Engine [label="select"];
+	Engine -> CDR_Mediated [label="delete"];
+	Engine -> BILLED [label="insert"];
+	Engine -> BILLERR [label="insert"];
+
+	// file
+	input_file [shape=Msquare];
+
+	// entities
+	Reader [shape=circle];
+	Mediator [shape=circle];
+	Allocator [shape=circle];
+	Engine [shape=circle];
+
+	// tables
+	CDR_Raw [shape=box];
+	Nodes [shape=box];
+	ReaderProfile [shape=box];
+	MediatorProfile [shape=box];
+	CONFIG [shape=box];
+	LOOKUP [shape=box];
+	CDR_Mediated [shape=box];
+	PARSE_ERR [shape=box];
+	BILLED [shape=box];
+	BILLERR [shape=box];
+}
+	

@@ -1,0 +1,89 @@
+/home/tmarsh/cvs/xcdr/src/common/csv.cc:55: Warning: no matching class member found for
+  CSVParser::CSVParser(const std::string &line)
+/home/tmarsh/cvs/xcdr/src/common/csv.cc:73: Warning: no matching class member found for
+  CSVParser::~CSVParser()
+/home/tmarsh/cvs/xcdr/src/common/csv.cc:78: Warning: no matching class member found for
+  std::string CSVParser::operator[](std::size_t pos)
+/home/tmarsh/cvs/xcdr/src/common/datetime.cc:73: Warning: member `toCurrentTime' of class `DateTime' cannot be found
+/home/tmarsh/cvs/xcdr/src/rdbms/context.cc:71: Warning: no matching class member found for
+  XCDR::Context::Context()
+/home/tmarsh/cvs/xcdr/src/rdbms/context.cc:76: Warning: no matching class member found for
+  Connection * XCDR::Context::getConnection()
+/home/tmarsh/cvs/xcdr/src/rdbms/context.cc:96: Warning: no matching class member found for
+  XCDR::Context::~Context()
+/home/tmarsh/cvs/xcdr/src/rdbms/context.cc:102: Warning: no matching class member found for
+  void XCDR::Context::begin()
+/home/tmarsh/cvs/xcdr/src/rdbms/context.cc:108: Warning: no matching class member found for
+  void XCDR::Context::rollback()
+/home/tmarsh/cvs/xcdr/src/rdbms/context.cc:114: Warning: no matching class member found for
+  void XCDR::Context::commit()
+/home/tmarsh/cvs/xcdr/src/rdbms/context.cc:120: Warning: no matching class member found for
+  void XCDR::Context::execute(const std::string &sql)
+/home/tmarsh/cvs/xcdr/src/rdbms/params.cc:72: Warning: no matching class member found for
+  XCDR::Parameters::Parameters()
+/home/tmarsh/cvs/xcdr/src/rdbms/params.cc:75: Warning: no matching class member found for
+  XCDR::Parameters::~Parameters()
+/home/tmarsh/cvs/xcdr/src/rdbms/params.cc:88: Warning: no matching class member found for
+  void XCDR::Parameters::add(std::string &name, std::string &val)
+/home/tmarsh/cvs/xcdr/src/rdbms/params.cc:95: Warning: no matching class member found for
+  void XCDR::Parameters::add(std::string &name, unsigned int &val)
+/home/tmarsh/cvs/xcdr/src/rdbms/params.cc:102: Warning: no matching class member found for
+  void XCDR::Parameters::add(std::string &name, std::list< std::string > &val)
+/home/tmarsh/cvs/xcdr/src/rdbms/params.cc:121: Warning: no matching class member found for
+  std::string & XCDR::Parameters::operator[](const std::string &name)
+/home/tmarsh/cvs/xcdr/src/rdbms/query.cc:73: Warning: no matching class member found for
+  Parameters XCDR::QueryGroup::paramsNull()
+/home/tmarsh/cvs/xcdr/src/rdbms/query.cc:76: Warning: no matching class member found for
+  XCDR::Repository::Repository(std::string &n)
+/home/tmarsh/cvs/xcdr/src/rdbms/query.cc:83: Warning: no matching class member found for
+  void XCDR::QueryGroup::build(InputPair &input)
+/home/tmarsh/cvs/xcdr/src/rdbms/table.cc:62: Warning: no matching class member found for
+  void XCDR::Table::create()
+/home/tmarsh/cvs/xcdr/src/rdbms/table.cc:68: Warning: no matching class member found for
+  void XCDR::Table::drop()
+/home/tmarsh/cvs/xcdr/src/rdbms/table.cc:74: Warning: no matching class member found for
+  void XCDR::Table::truncate()
+/home/tmarsh/cvs/xcdr/src/rdbms/table.cc:80: Warning: no matching class member found for
+  ResultStore XCDR::Table::fetchAll()
+/home/tmarsh/cvs/xcdr/src/rdbms/table.cc:87: Warning: no matching class member found for
+  bool XCDR::Table::exists()
+/home/tmarsh/cvs/xcdr/src/rdbms/table.cc:93: Warning: no matching class member found for
+  bool XCDR::Table::schemaDifference()
+/home/tmarsh/cvs/xcdr/src/xml/model.cc:70: Warning: no matching class member found for
+  XCDR::Handler::Handler()
+Possible candidates:
+  Handler::Handler()
+/home/tmarsh/cvs/xcdr/src/xml/model.cc:87: Warning: no matching class member found for
+  XCDR::Handler::~Handler()
+Possible candidates:
+  Handler::~Handler()
+/home/tmarsh/cvs/xcdr/src/xml/model.cc:92: Warning: no matching class member found for
+  std::string XCDR::Handler::stateString()
+/home/tmarsh/cvs/xcdr/src/xml/model.cc:113: Warning: member `handleProfile' of class `Handler' cannot be found
+/home/tmarsh/cvs/xcdr/src/xml/model.cc:169: Warning: member `handleAttrib' of class `Handler' cannot be found
+/home/tmarsh/cvs/xcdr/src/xml/model.cc:237: Warning: no matching class member found for
+  void XCDR::Handler::startElement(const XMLCh *const uri, const XMLCh *const localname, const XMLCh *const qname, const Attributes &attrs)
+/home/tmarsh/cvs/xcdr/src/xml/model.cc:389: Warning: no matching class member found for
+  void XCDR::Handler::endElement(const XMLCh *const uri, const XMLCh *const localname, const XMLCh *const qname)
+/home/tmarsh/cvs/xcdr/src/xml/model.cc:454: Warning: no matching class member found for
+  void XCDR::Handler::characters(const XMLCh *const chars, const unsigned int length)
+/home/tmarsh/cvs/xcdr/src/xml/model.cc:470: Warning: no matching class member found for
+  void XCDR::Handler::fatalError(const SAXParseException &excep)
+/home/tmarsh/cvs/xcdr/src/xml/repository.cc:64: Warning: no matching class member found for
+  XCDR::Handler::Handler()
+Possible candidates:
+  Handler::Handler()
+/home/tmarsh/cvs/xcdr/src/xml/repository.cc:77: Warning: no matching class member found for
+  XCDR::Handler::~Handler()
+Possible candidates:
+  Handler::~Handler()
+/home/tmarsh/cvs/xcdr/src/xml/repository.cc:82: Warning: no matching class member found for
+  std::string XCDR::Handler::stateString()
+/home/tmarsh/cvs/xcdr/src/xml/repository.cc:101: Warning: no matching class member found for
+  void XCDR::Handler::startElement(const XMLCh *const uri, const XMLCh *const localname, const XMLCh *const qname, const Attributes &attrs)
+/home/tmarsh/cvs/xcdr/src/xml/repository.cc:281: Warning: no matching class member found for
+  void XCDR::Handler::endElement(const XMLCh *const uri, const XMLCh *const localname, const XMLCh *const qname)
+/home/tmarsh/cvs/xcdr/src/xml/repository.cc:305: Warning: no matching class member found for
+  void XCDR::Handler::characters(const XMLCh *const chars, const unsigned int length)
+/home/tmarsh/cvs/xcdr/src/xml/repository.cc:327: Warning: no matching class member found for
+  void XCDR::Handler::fatalError(const SAXParseException &excep)

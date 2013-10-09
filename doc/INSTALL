@@ -1,0 +1,51 @@
+INSTALLING XCDR
+---------------
+
+Installation of the base XCDR system consists of the following actions:
+
+	- create user 'xcdr' and group 'xcdr'
+
+	- create the xcdr home directory (default /home/xcdr)
+
+	- as root, run the install script included with the XCDR distribution.
+
+The install script will create the following directory structure within the xcdr home directory:
+
+	~/etc
+	~/bin
+	~/lib
+	~/var
+	~/var/cache
+	~/var/run
+	~/var/log
+	~/var/log/reader
+	~/var/log/mediator
+
+The following files are installed:
+
+	~/etc:
+
+		- config.xml
+		- profile
+
+	~/bin:
+
+		- xcdr_mediator
+		- xcdr_reader
+		- xcdr_callgen_sonus
+
+	~/lib:
+		- libxcdrCommon-<ver>-<ver>.so
+		- libxcdrCommon-<ver>.so (symlink)
+		- libxcdrCommon-<ver>.a
+		- libxcdrCommon-<ver>.la
+		- libxcdrGWSonus-<ver>-<ver>.so
+		- libxcdrGWSonus-<ver>.so (symlink)
+		- libxcdrGWSonus-<ver>.a
+		- libxcdrGWSonus-<ver>.la
+
+All files will be chowned xcdr:xcdr by the install script.
+
+NOTE: It is important to modify the xcdr user's .bashrc or equivalent to import
+      the file ~xcdr/etc/profile as this sets XCDR's PATH and LD_LIBRARY_PATH
+      environment variables.

@@ -1,0 +1,212 @@
+// ==========================================================================
+//
+// XCDR, Version 1.0
+//
+// Copyright (c) 2003 Thomas D. Marsh. All rights reserved.
+//
+// ==========================================================================
+//
+// Redistribution and use is subject to agreement with the author(s). See
+// the doc/LICENSE file for more details.
+//
+// THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
+// WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+// OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+// DISCLAIMED.  IN NO EVENT SHALL THE APACHE SOFTWARE FOUNDATION OR
+// ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF
+// USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+// ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+// OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+// OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+// SUCH DAMAGE.
+//
+// =========================================================================
+//
+// $Source: /usr/local/cvs/xcdr/src/common/entity.cc,v $
+// $Revision: 1.9 $
+// $Date: 2003/04/04 16:06:36 $
+// $Author: tmarsh $
+//
+// -------------------------------------------------------------------------
+//
+// $Log: entity.cc,v $
+// Revision 1.9  2003/04/04 16:06:36  tmarsh
+// namespace changes
+//
+// Revision 1.8  2003/04/02 20:35:51  tmarsh
+// added XCDR namespacing; eradicated all using namespace std
+//
+// Revision 1.7  2003/03/09 08:26:12  tmarsh
+// include file reorganization
+//
+// Revision 1.6  2003/03/07 18:07:12  tmarsh
+// use new getcontext method
+//
+// Revision 1.5  2003/03/06 11:20:02  tmarsh
+// updated headers
+//
+//
+// =========================================================================
+
+#include "common/entity.h"
+#include "common/util.h"
+#include "common/logging.h"
+
+extern "C"
+{
+#include <unistd.h>
+}
+
+XCDR_NAMESPACE_BEGIN
+
+//
+// Return the id for this instance
+//
+
+unsigned int Entity::getID() const
+{
+	return entity_id;
+}
+
+
+//
+// Return the type id (e.g., 1=reader, 2=mediator)
+//
+
+EntityType::EntityType Entity::getTypeID() const
+{
+	return EntityType::UNKNOWN_TYPE;
+}
+
+
+//
+// This is the mainloop; usage for clients of entities should
+// perform the following:
+//
+//     e = EntityImpl(1)
+//     e.run();
+//
+
+void Entity::run()
+{
+	ENTER();
+	setupEntity();
+
+	initialize();
+
+	INFO(getName() << ": beginning main loop");
+	while (!shutdown_called)
+	{
+		execute();
+
+		if (is_idle)
+			wait();
+
+		TODO("Check if shutdown called.");
+	}
+	shutdown();
+	LEAVE();
+}
+
+//
+// Constructor is protected; don't instantiate directly
+//
+
+Entity::Entity(unsigned int id)
+{
+	ENTER();
+	entity_id = id;
+	shutdown_called = false;
+	is_idle = false;
+	context = NULL;
+	LEAVE();
+}
+
+//
+// Wait has a default fuctionality of sleeping one second
+//
+
+void Entity::wait() const
+{
+	ENTER();
+	TODO(getName());
+	TODO("should implement its own wait");
+	sleep(1);
+	LEAVE();
+}
+
+
+//
+// This is the setIdle function. The implementation should
+// use this in its execute() method.
+//
+
+void Entity::setIdle(bool value)
+{
+	ENTER();
+	is_idle = value;
+	if (is_idle == true)
+	{
+		INFO(getName() << " idle");
+	}
+	LEAVE();
+}
+
+bool Entity::isIdle() const
+{
+	ENTER();
+	LEAVE();
+	return is_idle;
+}
+
+Entity::~Entity()
+{
+	ENTER();
+	if (context)
+		delete context;
+	LEAVE();
+}
+
+RDBMS::Context *Entity::getContext() const
+{
+	ENTER();
+	LEAVE();
+	return context;
+}
+
+
+//
+// Performs intial configuration of the entity before calling
+// initialize()
+//
+
+void Entity::setupEntity()
+{
+	ENTER();
+	// setup logging
+
+	Log::path = getName() + "/" + Util::itoa(entity_id);
+	Log::id = entity_id;
+	Log::open();
+
+	INFO("logging facilities configured at path: " << Log::path);
+
+	// lock pid file
+
+	INFO("Locking PID file");
+	pid_lock.create(getName(), entity_id);
+
+	// setup statistics module
+	INFO("Setting up statistics module");
+	stats = new Statistics::Manager("fixme", entity_id);
+
+	// setup database connection
+
+	INFO("Creating RDBMS context");
+	context = RDBMS::GetContext();
+	LEAVE();
+}
+
+XCDR_NAMESPACE_END

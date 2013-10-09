@@ -1,0 +1,114 @@
+See also the SCHEMA documentation for XML schemas that drive this interface.
+
+This document describes usage of the RDBMS interface.
+
+-----------------------------------------------------------------------------
+
+1. RDBMS::Context
+
+-----------------------------------------------------------------------------
+
+Generally, all actions are provided through the RDBMS::Context interface.
+To initialize the context the client code must perform the following:
+
+	RDBMS::Context *context = RDBMS::GetContext();
+
+This is best kept as an attribute in the class as such:
+
+	class Foo
+	{
+	public:
+		Foo()
+		{
+			context = RDBMS::GetContext();
+		}
+	private:
+		RDBMS::Context *context;
+	};
+
+The RDBMS::Context is responsible for maintaining the unicity of objects
+provided, but will only do so on a per process basis.
+
+
+-----------------------------------------------------------------------------
+
+2. Table Interface
+
+-----------------------------------------------------------------------------
+
+No SQL code should be kept within the client, but instead in the XML Model
+file and in the XML Repository file. These files are found in:
+
+	~xcdr/etc/model.xml
+	~xcdr/etc/repository.xml
+
+
+We will take the example of the CDR_Raw table. The client should grab a
+handle for each table it would like to use:
+
+	RDBMS::TableHandle *CDR_Raw = context->getTableHandle("CDR_Raw");
+
+
+The client may perform several actions on the TableHandle:
+
+	void Foo::tableCheck()
+	{
+		// verify that the table is in the database
+
+		if (CDR_Raw->exists())
+		{
+			// check that the database version matches the model
+
+			if (CDR_Raw->schemaDifference())
+			{
+				// begin a transaction (normally a try block)
+
+				context->begin();
+
+				// execute a "DROP TABLE"
+				CDR_Raw->drop();
+
+				// execute a "CREATE TABLE"
+				CDR_Raw->create();
+
+				// commit the transaction
+
+				context->commit();
+			}
+		}
+
+		// fetch all entries
+		RDBMS::ResultStore *results = CDR_Raw->fetchAll();
+
+		// execute a "TRUNCATE TABLE"
+		CDR_Raw->truncate();
+	}
+
+
+-----------------------------------------------------------------------------
+
+3. Query Interface
+
+-----------------------------------------------------------------------------
+
+In order to use the Query objects kept in the repository:
+
+	RDBMS::Repository *repository = context->getRepository();
+
+	RDBMS::QueryGroup *mediator_query = repository->getGroup("Mediator");
+	RDBMS::QueryGroup *sonus_query =
+		repository->getGroup("Mediator/Sonus");
+
+	RDBMS::ResultStore *results;
+
+	results = sonus_query->query("SonusCallIDs");
+
+	// .. process results ..
+	std::list<std::string> keys = process(key_results);
+
+	RDBMS::Parameters params;
+	params.add("keys", keys);
+
+	results = mediator_query("GetOffsets", params);
+
+	// .. process ..

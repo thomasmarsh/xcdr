@@ -1,0 +1,692 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<location-map>
+  <!-- Canadian states -->
+
+  <state loc_state="AB">
+    <iso>CA</iso>
+    <country>Canada</country>
+    <province>Alberta</province>
+    <timezone>MST</timezone>
+    <detail id="1403">Calgary, Red Deer, Lethbridge, Medicine Hat, Airdrie, Red Deer County, Cochrane, Okotoks, Brooks and Canmore</detail>
+    <detail id="1780">Edmonton, Saint Albert, Grande Prairie, Spruce Grove, Leduc, Camrose, Lloydminster, Fort Saskatchewan, Wetaskiwin and Hinton</detail>
+  </state>
+
+  <state loc_state="BC">
+    <iso>CA</iso>
+    <country>Canada</country>
+    <province>British Columbia</province>
+    <timezone>PST</timezone>
+    <timezone loc_name="cranbrook|golden|invermere">MST</timezone>
+    <detail id="1250">Saanich, Kelowna, Victoria, Nanaimo, Prince George, Vernon, Langford, Cranbrook, Courtenay and Oak Bay</detail>
+    <detail id="1604">Vancouver, Surrey, Burnaby, Richmond, Abbotsford, Delta, Maple Ridge, Chilliwack, New Westminster and Port Coquitlam</detail>
+  </state>
+
+  <state loc_state="MB">
+    <iso>CA</iso>
+    <country>Canada</country>
+    <province>Manitoba</province>
+    <timezone>America/Winnipeg</timezone>
+    <timezone loc_name="shebandowan|upsala">EST</timezone>
+    <detail id="1204">Winnipeg, Brandon, Thompson, Portage La Prairie, Springfield, St Andrews, Selkirk, Steinbach, St Clements and Dauphin</detail>
+  </state>
+
+  <state loc_state="NB">
+    <iso>CA</iso>
+    <country>Canada</country>
+    <province>New Brunswick</province>
+    <timezone>America/Winnipeg</timezone>
+    <timezone loc_name="XXX">AST</timezone>
+    <detail id="1204">Saint John, Moncton, Fredericton, Miramichi, Edmundston, Riverview, Dieppe, Quispamsis, Bathurst and Rothesay</detail>
+  </state>
+
+  <state loc_state="NF">
+    <iso>CA</iso>
+    <country>Canada</country>
+    <province>Newfoundland</province>
+    <timezone>America/St_Johns</timezone>
+    <detail id="1709">Saint John's, Mount Pearl Park, Corner Brook, Conception Bay South, Grand Falls-Windsor, Gander, Paradise Cove, Happy Valley Goose Bay, Labrador City and Stephenville</detail>
+  </state>
+
+  <state loc_state="NS">
+    <iso>CA</iso>
+    <country>Canada</country>
+    <province>Novia Scotia</province>
+    <timezone>AST</timezone>
+  </state>
+
+  <state loc_state="NT">
+    <iso>CA</iso>
+    <country>Canada</country>
+    <province>Northwest Territories</province>
+    <timezone>MST</timezone>
+  </state>
+
+  <state loc_state="ON">
+    <iso>CA</iso>
+    <country>Canada</country>
+    <province>Ontario</province>
+    <timezone>EST</timezone> <!-- XXX: http://www.timetemperature.com/tzca/current_time_in_ontario.shtml -->
+  </state>
+
+  <state loc_state="PE">
+    <iso>CA</iso>
+    <country>Canada</country>
+    <province>Prince Edward Island</province>
+    <timezone>AST</timezone>
+  </state>
+
+  <state loc_state="PQ">
+    <iso>CA</iso>
+    <country>Canada</country>
+    <province>Quebec</province>
+    <abbrev>QC</abbrev>
+    <timezone>EST</timezone>
+    <!-- http://www.timetemperature.com/tzca/current_time_in_quebec_canada.shtml -->
+  </state>
+
+  <state loc_state="SK">
+    <iso>CA</iso>
+    <country>Canada</country>
+    <province>Sasketchewan</province>
+    <timezone>CST</timezone>
+    <!-- http://www.timetemperature.com/tzca/current_time_in_saskatchewan.shtml -->
+  </state>
+
+  <state loc_state="YT">
+    <iso>CA</iso>
+    <country>Canada</country>
+    <province>Yukon</province>
+    <timezone>PST</timezone>
+  </state>
+
+
+  <!-- US States -->
+
+  <state loc_state="CH">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>All States</province>
+    <detail id="1500">Personal Communications Services (premium charges may apply)</detail>
+    <detail id="1900">900 Service (Toll Services) - Premium "pay-per-call" services</detail>
+    <timezone>CST</timezone>
+  </state>
+
+  <state loc_state="TS">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>All States</province>
+    <detail id="1710">U.S. Government - Access to U.S. Government services</detail>
+    <timezone>CST</timezone>
+  </state>
+
+  <state loc_state="AL">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Alabamba</province>
+    <timezone>CST</timezone>
+  </state>
+
+  <state loc_state="AK">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Alaska</province>
+  </state>
+
+  <state loc_state="AZ">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Arizona</province>
+  </state>
+
+  <state loc_state="AR">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Arkansas</province>
+    <timezone>CST</timezone>
+  </state>
+
+  <state loc_state="CA">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>California</province>
+    <timezone>PST</timezone>
+
+    <detail id="1209">Fresno, Stockton, Modesto, Merced, Lodi, Turlock, Tracy, Manteca, Ceres and Atwate</detail>
+    <detail id="1213">Los Angeles, Cudahy, Walnut Park and Vernon</detail>
+    <detail id="1310">Los Angeles, Torrance, Inglewood, Compton, Carson, Santa Monica, Hawthorne, Lynwood, Redondo Beach and Gardena</detail>
+    <detail id="1323">Los Angeles, East Los Angeles, South Gate, Montebello, Huntington Park, Bell Gardens, Bell, West Hollywood, Maywood and Cudahy</detail>
+  </state>
+
+  <state loc_state="CO">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Colorado</province>
+    <timezone>MST</timezone>
+  </state>
+
+  <state loc_state="CT">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Connecticut</province>
+    <timezone>EST</timezone>
+    <detail id="1203">Bridgeport, New Haven, Stamford, Waterbury, Norwalk, Danbury, Meriden, West Haven, Stratford and Shelton</detail>
+    <detail id="1860">Hartford, New Britain, Bristol, West Hartford, East Hartford, Middletown, Norwich, Torrington, New London and Windsor Locks</detail>
+  </state>
+
+  <state loc_state="DC">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Washington DC</province>
+    <timezone>EST</timezone>
+  </state>
+
+  <state loc_state="DE">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Delaware</province>
+    <timezone>EST</timezone>
+    <detail id="1302">Wilmington, Dover, Newark, Brookside, Claymont, Wilmington Manor, Milford, Talleyville, Seaford and Edgemoor</detail>
+  </state>
+
+  <state loc_state="FL">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Florida</province>
+    <timezone>EST</timezone><timezone>XXX: CST</timezone>
+  </state>
+    
+  <state loc_state="GA">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Georgia</province>
+    <timezone>EST</timezone>
+  </state>
+    
+  <state loc_state="HI">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Hawaii</province>
+    <timezone>HST</timezone>
+  </state>
+    
+  <state loc_state="IA">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Iowa</province>
+    <timezone>CST</timezone>
+    <detail id="1319">Cedar Rapids, Waterloo, Iowa City, Cedar Falls, Burlington, Marion, Keokuk, Fort Madison, Coralville and Waverly</detail>
+    <detail id="1515">Des Moines, Ames, West Des Moines, Urbandale, Fort Dodge, Ankeny, Boone, Indianola, Webster City and Clive</detail>
+    <detail id="1712">Sioux City, Council Bluffs, Spencer, Carroll, Le Mars, Storm Lake, Atlantic, Estherville, Denison and Red Oak</detail>
+  </state>
+    
+  <state loc_state="ID">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Idaho</province>
+    <timezone>MST</timezone><timezone>XXX: PST</timezone>
+    <detail id="1208">Boise, Idaho Falls, Pocatello, Nampa, Twin Falls, Lewiston, Coeur d'Alene, Caldwell, Moscow and Meridian</detail>
+  </state>
+    
+  <state loc_state="IL">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Illinois</province>
+    <timezone>America/Chicago</timezone>
+    <detail id="1217">Springfield, Decatur, Champaign, Quincy, Urbana, Danville, Charleston, Jacksonville, Mattoon and Lincoln</detail>
+    <detail id="1224">Roselle, Round Lake Beach, Deerfield, Beach Park, Lindenhurst, Inverness, Countryside, Hawthorn Woods, Park City and Northfield</detail>
+    <detail id="1309">Peoria, Bloomington, Moline, Normal, Rock Island, Galesburg, Pekin, East Peoria, Macomb and East Moline</detail>
+    <detail id="1312">Chicago</detail>
+    <detail id="1618">Belleville, East Saint Louis, Alton, Granite City, Carbondale, Collinsville, O'Fallon, Mount Vernon, Cahokia and Fairview Heights</detail>
+    <detail id="1630">Chicago, Aurora, Naperville, Elgin, Wheaton, Downers Grove, Bolingbrook, Elmhurst, Lombard and Carol Stream</detail>
+    <detail id="1708">Chicago, Cicero, Oak Lawn, Oak Park, Berwyn, Orland Park, Tinley Park, Calumet City, Chicago Heights and Harvey</detail>
+    <detail id="1773">Chicago, Lincolnwood and Harwood Heights</detail>
+    <detail id="1815">Rockford, Joliet, De Kalb, Kankakee, Crystal Lake, Freeport, Machesney Park, Ottawa, McHenry and Belvidere</detail>
+    <detail id="1847">Chicago, Elgin, Arlington Heights, Schaumburg, Evanston, Waukegan, Skokie, Mount Prospect, Des Plaines and Hoffman Estates</detail>
+  </state>
+    
+  <state loc_state="IN">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Indiana</province>
+    <!--
+      CST counties missing:
+
+	Gibson
+	Lake
+	Newton
+	Porter
+	Posey
+	Spencer
+	Vanderburgh
+	Warrick
+
+      EST (DST) missing:
+	Clark
+	Dearborn
+	Floyd
+	Harrison
+	Ohio
+    -->
+    <timezone>America/Indianapolis</timezone>
+    <timezone loc_name="jasper|la porte|spencer">America/Indiana/Knox</timezone>
+    <timezone loc_name="jeffersnvl">America/Indiana/Vevay</timezone>
+  </state>
+    
+  <state loc_state="KS">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Kansas</province>
+    <timezone>CST</timezone>
+    <timezone loc_name="sherman|wallacs|greeley|hamilton">MST</timezone>
+  </state>
+
+<!--
+EST: Anderson Bath Bell Boone Bourbon Boyd Boyle Bracken Breathitt Bullitt Campbell Carroll Carter Casey Clark Clay Elliott Estill Fayette Fleming Floyd Franklin Jackson Jefferson Jessamine Johnson Kenton Knott Knox Larue Laurel Lawrence Lee Leslie Letcher Lewis Lincoln Gallatin Garrard Grant Greenup Hardin Harlan Harrison Henry McCreary Madison Magoffin Marion Martin Mason Meade Menifee Mercer Montgomery Morgan Nelson Nicholas Oldham Owen Owsley Pendleton Perry Pike Powell Pulaski Robertson Rockcastle Rowan Scott Shelby Spencer Taylor Trimble Washington Wayne Whitley Wolfe Woodford
+
+CST: Adair Allen Ballard Barren Breckinridge Butler Caldwell Calloway Carlisle Christian Clinton Crittenden Cumberland Daviess Edmonson Fulton Graves Grayson Green Hancock Hart Henderson Hickman Hopkins Livingston Logan Lyon McCracken McLean Marshall Metcalfe Monroe Muhlenberg Ohio Russell Simpson Todd Trigg Union Warren Webster
+-->
+    
+  <state loc_state="KY">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Kentucky</province>
+    <timezone>EST</timezone> <!-- see county map above! -->
+  </state>
+    
+  <state loc_state="LA">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Louisiana</province>
+    <timezone>CST</timezone>
+  </state>
+    
+  <state loc_state="MA">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Massachusetts</province>
+    <timezone>EST</timezone>
+  </state>
+
+  <state loc_state="MD">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Maryland</province>
+    <timezone>EST</timezone>
+  </state>
+
+  <state loc_state="ME">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Maine</province>
+    <timezone>EST</timezone>
+  </state>
+
+  <state loc_state="MI">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Michigan</province>
+    <timezone>EST</timezone>
+    <timezone loc_name="dickinson|gogebic|iron|menominee">CST</timezone>
+  </state>
+
+  <state loc_state="MN">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Minnesota</province>
+    <timezone>CST</timezone>
+  </state>
+
+  <state loc_state="MS">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Mississippi</province>
+    <timezone>CST</timezone>
+  </state>
+
+  <state loc_state="MT">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Montana</province>
+    <timezone>MST</timezone>
+  </state>
+
+  <state loc_state="MO">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Missouri</province>
+    <timezone>CST</timezone>
+  </state>
+
+  <state loc_state="NC">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>North Carolina</province>
+    <timezone>EST</timezone>
+  </state>
+
+  <state loc_state="ND">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>North Dakota</province>
+    <timezone>CSD</timezone>
+    <timezone loc_name="XXX">MST</timezone> <!-- see: http://www.timetemperature.com/tzus/current_time_in_north_dakota.shtml -->
+  </state>
+
+  <state loc_state="NE">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Nebraska</province>
+    <timezone>CST</timezone>
+    <timezone loc_name="XXX">MST</timezone> <!-- see: http://www.timetemperature.com/tzus/current_time_in_nebraska.shtml -->
+  </state>
+
+  <state loc_state="NH">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>New Hampshire</province>
+    <timezone>EST</timezone>
+    <detail id="1603">Manchester, Nashua, Concord, Rochester, Dover, Keene, Portsmouth, Laconia, Claremont and Lebanon</detail>
+  </state>
+
+  <state loc_state="NJ">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>New Jersey</province>
+    <timezone>EST</timezone>
+    <detail id="1201">Jersey City, Bayonne, Union City, North Bergen, Teaneck, Hackensack, West New York, Kearny, Hoboken and Fort Lee</detail>
+    <detail id="1609">Trenton, Atlantic City, Ewing, Pleasantville, Ocean City, Hammonton, Brigantine, Princeton, Somers Point and Ventnor City</detail>
+    <detail id="1732">Edison, New Brunswick, Perth Amboy, Sayreville, Long Branch, Lakewood, Rahway, Old Bridge, Carteret and Point Pleasant</detail>
+    <detail id="1856">Camden, Cherry Hill, Vineland, Willingboro, Millville, Maple Shade, Bridgeton, Lindenwold, Glassboro and Cinnaminson</detail>
+    <detail id="1908">Elizabeth, Union, Plainfield, Linden, Westfield, Cranford, Scotch Plains, Hillside, South Plainfield and Roselle</detail>
+    <detail id="1973">Newark, Paterson, Clifton, East Orange, Passaic, Wayne, Bloomfield, West Orange, Montclair and Belleville</detail>
+  </state>
+
+  <state loc_state="NM">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>New Mexico</province>
+    <timezone>MST</timezone>
+  </state>
+
+  <state loc_state="NV">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Nevada</province>
+    <timezone>PST</timezone>
+  </state>
+
+  <state loc_state="NY">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>New York</province>
+    <timezone>EST</timezone>
+  </state>
+
+  <state loc_state="OH">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Ohio</province>
+    <timezone>EST</timezone>
+  </state>
+
+  <state loc_state="OK">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Oklahoma</province>
+    <timezone>CST</timezone>
+  </state>
+
+  <state loc_state="OR">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Oregon</province>
+    <timezone>PST</timezone>
+    <!-- most of Malheur county is MST -->
+  </state>
+
+  <state loc_state="PA">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Pennsylvania</province>
+    <timezone>EST</timezone>
+  </state>
+
+  <state loc_state="RI">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Rhode Island</province>
+    <timezone>EST</timezone>
+  </state>
+
+  <state loc_state="SC">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>South Carolina</province>
+    <timezone>EST</timezone>
+  </state>
+
+  <state loc_state="SD">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>South Dakota</province>
+    <timezone>CST</timezone>
+    <!-- http://www.timetemperature.com/tzus/current_time_in_south_dakota.shtml -->
+  </state>
+
+  <state loc_state="TN">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Tennesee</province>
+    <timezone>CST</timezone>
+    <!-- http://www.timetemperature.com/tzus/current_time_in_tennessee.shtml -->
+  </state>
+
+  <state loc_state="TX">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Texas</province>
+    <timezone>CST</timezone>
+    <!-- http://www.timetemperature.com/tzus/current_times_in_texas_a-h.shtml -->
+  </state>
+
+  <state loc_state="UT">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Utah</province>
+    <timezone>MST</timezone>
+  </state>
+
+  <state loc_state="VA">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Virginia</province>
+    <timezone>EST</timezone>
+  </state>
+
+  <state loc_state="VT">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Vermont</province>
+    <timezone>EST</timezone>
+  </state>
+
+  <state loc_state="WA">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Washington</province>
+    <timezone>PST</timezone>
+  </state>
+
+  <state loc_state="WI">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Wisconsin</province>
+    <timezone>CST</timezone>
+  </state>
+
+  <state loc_state="WV">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>West Virginia</province>
+    <timezone>EST</timezone>
+  </state>
+
+  <state loc_state="WY">
+    <iso>US</iso>
+    <country>USA</country>
+    <province>Wyoming</province>
+    <timezone>MST</timezone>
+  </state>
+
+
+  <!-- Other NANP -->
+
+  <state loc_state="AI">
+    <iso>AI</iso>
+    <country>Anguilla (U.K.)</country>
+    <province>All parts</province>
+    <timezone>America/Anguilla</timezone>
+  </state>
+
+  <state loc_state="AN">
+    <iso>AG</iso>
+    <country>Antigua/Barbuda</country>
+    <province>All parts</province>
+    <timezone>America/Antigua</timezone>
+  </state>
+
+  <state loc_state="BA">
+    <iso>BS</iso>
+    <country>Bahamas</country>
+    <province>All parts</province>
+    <timezone>America/Nassau</timezone>
+  </state>
+
+  <state loc_state="BD">
+    <iso>BB</iso>
+    <country>Barbados</country>
+    <province>All Parts</province>
+    <timezone>America/Barbados</timezone>
+  </state>
+
+  <state loc_state="BM">
+    <iso>BM</iso>
+    <country>Bermuda (Atlantic, U.K.)</country>
+    <province>All Parts</province>
+    <timezone>Atlantic/Bermuda</timezone>
+  </state>
+
+  <state loc_state="BV">
+    <iso>VG</iso>
+    <country>British Virgin Islands (U.K.)</country>
+    <province>Anegada, Beef Island, Cooper Island, Ginger Island, Great Camanoe, Guana Island, Jost van Dyke, Norman Island, Peter Island, Tortola, Virgin Gorda; All parts</province>
+    <timezone>America/Tortola</timezone>
+  </state>
+
+  <state loc_state="CQ">
+    <iso>KY</iso>
+    <country>Cayman Islands (U.K.)</country>
+    <province>All parts</province>
+    <timezone>America/Cayman</timezone>
+  </state>
+
+  <state loc_state="DM">
+    <iso>DM</iso>
+    <country>Dominica (U.K.)</country>
+    <province>All parts</province>
+    <timezone>America/Dominica</timezone>
+  </state>
+
+  <state loc_state="DR">
+    <iso>DO</iso>
+    <country>Dominican Republic</country>
+    <province>All parts</province>
+    <timezone>America/Santo_Domingo</timezone>
+  </state>
+
+  <state loc_state="GN">
+    <iso>GD</iso>
+    <country>Grenada</country>
+    <province>Grenada Carriacou Island, Ronde Island; All parts</province>
+    <timezone>America/Grenada</timezone>
+  </state>
+
+  <state loc_state="GU">
+    <iso>GU</iso>
+    <country>Guam (U.S.)</country>
+    <province>Agana; All parts</province>
+    <timezone>Pacific/Guam</timezone>
+  </state>
+
+  <state loc_state="JM">
+    <iso>JM</iso>
+    <country>Jamaica</country>
+    <province>All parts</province>
+    <timezone>America/Jamaica</timezone>
+  </state>
+
+  <state loc_state="KA">
+    <iso>KN</iso>
+    <country>Saint Kitts and Nevis</country>
+    <province>All parts</province>
+    <timezone>America/St_Kitts</timezone>
+  </state>
+
+  <state loc_state="NN">
+    <iso>MP</iso>
+    <country>Saipan</country>
+    <province>Northern Mariana Islands</province>
+    <timezone>Pacific/Saipan</timezone>
+  </state>
+
+  <state loc_state="PR">
+    <iso>PR</iso>
+    <country>Puerto Rico</country>
+    <province>All parts</province>
+    <timezone>America/Puerto_Rico</timezone>
+    <detail id="1787">San Juan, Bayamon, Ponce, Carolina, Caguas, Mayaguez, Arecibo, Guaynabo, Aguadilla and Trujillo Alto</detail>
+  </state>
+
+   <state loc_state="RT">
+    <iso>MS</iso>
+    <country>Montserrat (U.K.)</country>
+    <province>All parts</province>
+    <timezone>America/Montserrat</timezone>
+   </state>
+
+   <state loc_state="SA">
+    <iso>LC</iso>
+    <country>Saint Lucia (U.K.)</country>
+    <province>All parts</province>
+    <timezone>America/St_Lucia</timezone>
+   </state>
+
+   <state loc_state="TC">
+    <iso>TC</iso>
+    <country>Turks and Caicos Islands (U.K.)</country>
+    <province>Amergris Cays, Caicos Islands, Grand Turk, Salt Cay</province>
+    <timezone>America/Grand_Turk</timezone>
+   </state>
+
+   <state loc_state="TR">
+    <iso>TR</iso>
+    <country>Trinidad and Tobago</country>
+    <province>All parts</province>
+    <timezone>America/Port_of_Spain</timezone>
+   </state>
+
+   <state loc_state="VI">
+    <iso>VI</iso>
+    <country>U.S. Virgin Islands</country>
+    <province>Brass Island, Buck Island, Hans Lollick Island, St. Croix, St. John, St. Thomas</province>
+    <timezone>America/St_Thomas</timezone>
+   </state>
+
+   <state loc_state="ZF">
+    <iso>VC</iso>
+    <country>Saint Vincent (U.K.)</country>
+    <province>Baliceau, Battowia, Bequia, Canouan, Isle Quatre, Mayreau, Mustique, Prune Isl., St. Vincent, Union Island</province>
+    <timezone>America/St_Vincent</timezone>
+   </state>
+
+</location-map>

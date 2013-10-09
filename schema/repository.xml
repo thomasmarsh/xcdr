@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<repository model="XCDR">
+
+  <!-- READER QUERIES -->
+  <group name="Reader">
+    <query name="setCommited" type="update" table="CDR_Raw">
+      <in>
+	<param name="reader"/>
+      </in>
+      <sql>
+	UPDATE <table/>
+           SET commited = 1
+         WHERE commited = 0
+	   AND i_reader = <input name="reader"/>
+      </sql>
+    </query>
+    <query name="rawCount" type="select" table="CDR_Raw">
+      <sql>
+	SELECT COUNT(*) FROM <table/>
+      </sql>
+    </query>
+  </group>
+
+  <!-- MEDIATOR QUERIES -->
+
+  <group name="Mediator">
+
+    <query name="GetOffsets" type="select" table="CDR_Raw">
+      <in>
+        <param name="keys"/>
+      </in>
+      <sql>
+	SELECT call_id, cdr_offset
+	  FROM <table/>
+	 WHERE call_id IN (<input name="keys"/>)
+	 ORDER BY call_id, cdr_offset, cdr_time DESC
+      </sql>
+    </query>
+
+    <query name="ClearRaw" type="delete" table="CDR_Raw">
+      <in>
+        <param name="keys"/>
+      </in>
+      <sql>
+	DELETE FROM <table/>
+	 WHERE commited = 1
+	   AND call_id IN (<input name="keys"/>)
+      </sql>
+    </query>
+
+    <!-- SONUS SPECIFIC -->
+
+    <group name="Sonus">
+
+      <query name="SonusCount" type="select" table="CDR_Raw">
+        <sql>
+	  SELECT COUNT(*)
+	    FROM <table/>
+	   WHERE i_node_type = 1
+	     AND (i_cdr_type = 5 OR i_cdr_type = 6)
+        </sql>
+      </query>
+
+      <query name="SonusCallIDs" type="select" table="CDR_Raw">
+        <sql>
+	  SELECT call_id
+	    FROM <table/>
+	   WHERE i_node_type = 1
+	     AND (i_cdr_type = 5 OR i_cdr_type = 6)
+        </sql>
+      </query>
+
+    </group>
+
+  </group>
+</repository>

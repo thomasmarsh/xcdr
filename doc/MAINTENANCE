@@ -1,0 +1,17 @@
+The system should support:
+
+	1. Distributed revision management
+
+	2. Push button upgrades
+
+	3. Notification of update availability
+
+1: Support XML schema for version information
+2: allow elements to be paused and resumed
+3: <later>
+
+Need to have:
+
+	- code updates
+	- schema alterations
+	- awareness of customer extensions

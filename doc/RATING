@@ -1,0 +1,295 @@
+RATES
+-------------
+
+Rates are one of the most complicated bits of XCDR because they are required
+to be so flexible.
+
+There are two elements with price points attached:
+
+	RATE	A rate is a function of the service duration
+
+	FEE	A fee is a flat price associated with a service irrespective
+		of service duration
+
+In order to charge an activity, the following must be defined:
+
+	- An activity flag profile to match the activity flags to a rate
+
+	- Definition of activity flags
+
+	- A Tariff to hold the rates and associate to a customer
+
+		- an applicability profile:
+
+			Monday to Friday, 08:00 - 20:00
+
+		- A rate entry for each flag profile and desired interval
+		  profile
+
+	- An IntervalProfile to specify which rate to use after which duration
+
+We will set up tables and create default entries to match a call from
+Harare, Zimbabwe (cc='976', i_dest=1245) to Ulaanbaatar, Mongolia
+(cc='263', i_dest=44444) with the following characteristics:
+
+	Type:	International (cld country code != cli country code)
+	M-F, 0800-2000: Price Plan(PP) A,
+	M-F, 2000-0800: Price Plan(PP) B,
+	Weekends, Holidays: Price Plan(PP) C,
+
+	Intervals: start billing after 3 seconds,
+		   round up to 60 seconds next interval,
+		   round up to 30 seconds ever interval there after
+
+
+		------------------------------------
+			HOLD[0]
+		------------------------------------
+		PP	Intrvl:	3	60	30
+		--
+		A		0.00	0.20	0.20
+		B		0.00	0.15	0.15
+		C		0.00	0.10	0.10
+
+		------------------------------------
+			HOLD[1]
+		------------------------------------
+		PP	Intrvl:	3	60	30
+		--
+		A		0.00	0.14	0.14
+		B		0.00	0.10	0.10
+		C		0.00	0.07	0.07
+
+		------------------------------------
+			HOLD[2]
+		------------------------------------
+		PP	Intrvl:	3	60	30
+		--
+		A		0.00	0.10	0.10
+		B		0.00	0.07	0.07
+		C		0.00	0.05	0.05
+
+	Initial prices are from HOLD[0] (hold interval 0), after 15 minutes,
+	HOLD[1] is used, after 30 minutes, HOLD[2]
+
+	Discount %12.33 (not covered in this implementation - that is related
+	to the customer involved)
+
+To identify single rate (i_rate=) you need:
+
+	- i_interval_profile
+	- i_interval
+	- i_hold_interval_profile
+	- i_hold_interval
+	- i_tariff
+	- you need to match all call flags for that rate
+
+
+----------------------------------------------------------------
+--
+-- IDENTIFY AS INTERNATIONAL
+--
+----------------------------------------------------------------
+
+CREATE TABLE FlagType
+(
+	i_flag			INT UNSIGNED NOT NULL,
+	name			VARCHAR(32),
+);
+INSERT INTO FlagType VALUES
+	(0, 'UNUSED'),
+	(1, 'Country Code');
+
+
+CREATE TABLE DestinationFlag
+(
+	i_dest			INT UNSIGNED NOT NULL,
+	i_flag			INT UNSIGNED NOT NULL,
+	value			VARCHAR(64)
+);
+INSERT INTO DestintationFlags VALUES
+	(1245, 1, '976'),
+	(44444, 1, '263');
+
+
+CREATE TABLE CallFlagRule
+(
+
+CallFlagRule?? We want "(cli.i_flag(1) != cld.i_flag(1))".
+
+----------------------------------------------------------------
+--
+-- SPECIFY INTERVALS
+--
+----------------------------------------------------------------
+
+TABLE IntervalProfile
+(
+	i_interval_profile	INT UNSIGNED NOT NULL,
+	i_interval		SMALLINT(5) NOT NULL,
+	seconds			SMALLINT(5) NOT NULL,
+	UNIQUE KEY IntervalKey(i_interval_profile, i_interval)
+);
+INSERT INTO IntervalProfile VALUES
+	(0, 0, 0), -- base
+
+	(1, 0, 3), -- 3/60/30
+	(1, 1, 60),
+	(1, 2, 30),
+
+	(2, 0, 15*60),
+	(2, 1, 30*60);
+
+----------------------------------------------------------------
+--
+-- SPECIFY VALIDITY PERIODS
+--
+----------------------------------------------------------------
+
+CREATE TABLE TimePeriod
+(
+	i_period		INT UNSIGNED NOT NULL,
+	period			VARCHAR(255) NOT NULL, -- temporary?
+);
+INSERT INTO TimePeriod VALUES
+	(0, 'wd {Mon-Fri} hr {8am-8pm}'),
+	(1, 'wd {Mon-Fri} hr {8pm-am}'),
+	(2, 'wd {Sat-Sun}');
+
+----------------------------------------------------------------
+--
+-- SPECIFY PRICES
+--
+----------------------------------------------------------------
+
+CREATE TABLE Rate
+(
+	i_rate			INT UNSIGNED NOT NULL,
+	i_tariff		INT UNSIGNED NOT NULL,
+
+	i_dest_cli		INT UNSIGNED,
+	i_dest_cld		INT UNSIGNED NOT NULL,
+
+	i_period		INT UNSIGNED NOT NULL,
+
+	i_interval_profile	INT UNSIGNED NOT NULL,
+	i_interval		INT UNSIGNED NOT NULL,
+	i_hold_interval_profile	INT UNSIGNED NOT NULL,
+	i_hold_interval		INT UNSIGNED NOT NULL,
+
+	price			FLOAT(15,5) NOT NULL,
+
+	-- the following are not listed in the below insert
+
+	effective_from		DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+	discontinued		TINYINT(1) NOT NULL DEFAULT 0,
+	forbidden		TINYINT(1) NOT NULL DEFAULT 0,
+
+	PRIMARY KEY (i_rate),
+	UNIQUE KEY RatesTariffDest (i_tariff, i_dest_cli, i_dest_cld, effective_from),
+	KEY RatesDestIdx (i_dest),
+	KEY RatesTariff (i_tariff),
+	KEY RatesEffFrom (effective_from)
+);
+
+INSERT INTO Rate VALUES
+(
+				period  inter   brack
+	(0, 0, 1245, 44444,	0,	1, 0,	2, 0	0.00),
+	(1, 0, 1245, 44444,	0,	1, 1,	2, 0	0.20),
+	(2, 0, 1245, 44444,	0,	1, 2,	2, 0	0.20),
+	(3, 0, 1245, 44444,	1,	1, 0,	2, 0	0.00),
+	(4, 0, 1245, 44444,	1,	1, 1,	2, 0	0.15),
+	(5, 0, 1245, 44444,	1,	1, 2,	2, 0	0.15),
+	(6, 0, 1245, 44444,	2,	1, 0,	2, 0	0.00),
+	(7, 0, 1245, 44444,	2,	1, 1,	2, 0	0.10),
+	(8, 0, 1245, 44444,	2,	1, 2,	2, 0	0.10),
+
+	(9, 0, 1245, 44444,	0,	1, 0,	2, 1	0.00),
+	(10, 0, 1245, 44444,	0,	1, 1,	2, 1	0.14),
+	(11, 0, 1245, 44444,	0,	1, 2,	2, 1	0.14),
+	(12, 0, 1245, 44444,	1,	1, 0,	2, 1	0.00),
+	(13, 0, 1245, 44444,	1,	1, 1,	2, 1	0.10),
+	(14, 0, 1245, 44444,	1,	1, 2,	2, 1	0.10),
+	(15, 0, 1245, 44444,	2,	1, 0,	2, 1	0.00),
+	(16, 0, 1245, 44444,	2,	1, 1,	2, 1	0.07),
+	(17, 0, 1245, 44444,	2,	1, 2,	2, 1	0.07),
+
+	(18, 0, 1245, 44444,	0,	1, 0,	2, 2	0.00),
+	(19, 0, 1245, 44444,	0,	1, 1,	2, 2	0.10),
+	(20, 0, 1245, 44444,	0,	1, 2,	2, 2	0.10),
+	(21, 0, 1245, 44444,	1,	1, 0,	2, 2	0.00),
+	(22, 0, 1245, 44444,	1,	1, 1,	2, 2	0.07),
+	(23, 0, 1245, 44444,	1,	1, 2,	2, 2	0.07),
+	(24, 0, 1245, 44444,	2,	1, 0,	2, 2	0.00),
+	(25, 0, 1245, 44444,	2,	1, 1,	2, 2	0.05),
+	(26, 0, 1245, 44444,	2,	1, 2,	2, 2	0.05);
+
+
+
+CREATE TABLE RateFlags
+(
+	i_rate			INT UNSIGNED NOT NULL,
+	i_flag			INT UNSIGNED NOT NULL,
+	i_rule			INT UNSIGNED NOT NULL
+);
+INSERT INTO RateFlag VALUES
+	(we want 'international')
+
+
+The rater logic is therefore:
+
+void Rater::rateCall(Call &call)
+{
+	unsigned int duration = call.elapsed_seconds;
+	Tariff t = tariff_map.get(call.i_customer);
+
+	RateKey k;
+	k.i_tariff = t.i_tariff;
+	k.i_interval_profile = t.i_interval_profile;
+	k.i_interval = interval_map.get(k.i_interval_profile, duration);
+
+	k.i_hold_interval_profile = t.i_interval_profile;
+	k.i_hold_interval = interval_map.get(k.i_hold_interval_profile,
+					     duration);
+
+	k.call_flags = callFlags(call);
+
+
+	Rate r = rate_map.get(k);
+
+}
+
+
+
+=========
+CALLFLAGS
+=========
+
+i_flag		description	source
+------		-----------	------
+0		UNUSED		NULL
+1		LATA		i_dest
+2		OCN		i_dest
+3		RBOC		i_dest
+4		STATE		i_dest
+
+
+============
+CALLFLAGVALS
+============
+
+i_flag		key	val
+------		---	---
+1		1512459 758
+4		1512	TX
+4		1202	NY
+
+=============
+CALLATTRIBUTE
+=============
+
+if (call.cli.attr[STATE] == call.cld.attr[STATE])
+	call.attr[INTERSTATE] = false;
+else
+	call.attr[INTERSTATE] = true;

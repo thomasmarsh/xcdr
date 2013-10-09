@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE model SYSTEM "file://localhost//home/tmarsh/cvs/xcdr/test/model.dtd">
+<model adaptor="default" name="XCDR" version="0.5">
+  <typedef>
+    <profile allowNull="false" externalType="INT" name="uint"
+      null="false" sign="unsigned" type="unsigned int"/>
+  </typedef>
+  <entity comment="stores things I like to keep track of" name="MyTable" type="InnoDB">
+    <attrib name="i_entry" primaryKey="true" profile="uint"/>
+    <attrib name="data" profile="uint"/>
+    <populate>
+      <record>
+        <a/>
+        <a/>
+      </record>
+      <record>
+        <a/>
+        <a/>
+      </record>
+      <record>
+        <a/>
+        <a/>
+      </record>
+      <record>
+        <a/>
+        <a/>
+      </record>
+    </populate>
+  </entity>
+  <entity comment="stores things I like to join with"
+    name="MyOtherTable" type="InnoDB">
+    <attrib name="i_entry" primaryKey="true" profile="uint"/>
+    <attrib name="data" profile="uint"/>
+    <attrib name="i_entry_parent" profile="uint"/>
+    <populate>
+      <record>
+        <a/>
+        <a/>
+        <a/>
+      </record>
+      <record>
+        <a/>
+        <a/>
+        <a/>
+      </record>
+      <record>
+        <a/>
+        <a/>
+        <a/>
+      </record>
+      <record>
+        <a/>
+        <a/>
+        <a/>
+      </record>
+    </populate>
+  </entity>
+  <relation deleteRule="cascade" name="myrelation">
+    <join semantic="inner">
+      <source attrib="i_entry_parent" table="MyOtherTable"/>
+      <destination attrib="i_entry" table="MyTable"/>
+    </join>
+  </relation>
+</model>

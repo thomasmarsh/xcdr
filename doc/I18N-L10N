@@ -1,0 +1,14 @@
+ICU From IBM http://oss.software.ibm.com/icu/ used for internationalization.
+
+Example resource bundle:
+
+	[root.txt]
+
+	root:table {
+	  usage:string { "Usage: xcdr_reader <id>" }
+	  version:int { 122 }
+	  errcodes:array {
+	    :string { "Invalid argument" }
+	    :string { "File not found" }
+	  }
+	}

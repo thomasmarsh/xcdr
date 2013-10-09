@@ -1,0 +1,60 @@
+\chapter{Preface}
+
+\section{What is \XCDR{}?}
+
+\XCDR{} is a collection, mediation and billing system designed for the ISP, VPN provider,
+ASP, telephony/\VOIP{} carrier, or any other service provider who needs to perform
+highly specific business logic in order to generate revenue from their service usage.
+
+\section{History}
+	\XCDR{} is an implementation a call mediation engine used for carrier
+        telcos. \XCDR{} was written based on experience constructing a similar
+        system at a major wholesale VOIP carrier. That system, CDRParse, supports
+        arbitrary scalable call volumes by
+	separation of collection, mediation and billing across multiple machines
+	for wholesale \VOIP traffic; as well, it supports the North American telephony
+	billing model, taking into account tariff zones (LATA), complex requirements
+	from other vendors and customers, toll free traffic (billing the recipient),
+	and other parameters such as pay phone and prison calls. CDRParse was built
+	with the goal of achieving billing at a rate of 100 calls per second (cps) per
+	mediation server.
+
+\section{The Documentation}
+This manual is designed to provide an introduction to \XCDR{}. It is requisite to read
+volume prior to the others as it provides a grouning in the terminology and ideology
+of the system. The documentation of \XCDR{} consists of the following manuals:
+
+\begin{description}
+\item[Concepts Guide] --
+	this manual; discusses \XCDR{} from a high level, and forms the foundation
+	for reading the other volumes.
+
+\item[User Guide] --
+	describes \XCDR{} usage from the standpoint of the user of the web interface,
+	including rate management and provisioning.
+
+\item[Administrator Guide] -- 
+	describes low level administration of an \XCDR{} implementation, including
+	debugging, sizing, and deployment.
+			
+\item[Development Guide] --
+	describes how to implement custom components based upon the \XCDR{} SDK.
+
+\end{description}
+
+	\subsection{Where to get the latest version of this guide}
+	The hard copy of this guide is updated at major releases only and does
+	not always contain the latest material for enhancements occuring between
+	interrim updates. The online copy of this guide is always up-to-date and
+	integrates the latest changes to the product. You can access the latest copy
+	of this guide at http://www.tdmi.com/support/doc/.
+
+	\subsection{Conventions}
+	This publication uses the following typographical conventions:
+	\begin{itemize}
+	\item Commands and keywords are \emph{emphasized}
+	\item Terminal sessions, console screens, and system file names are displayed
+	      in a \texttt{fixed width font}
+	\end{itemize}
+	In addition, 
+

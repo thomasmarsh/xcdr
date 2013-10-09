@@ -1,0 +1,181 @@
+\chapter{Collection}
+
+\begin{intro}
+Every device that you deploy has some mechanism for acquiring information about
+its usage. The method of retrieving that information can take many forms. This chapter
+discuss the means of enabling billing of devices utilizing various retrieval methods.
+\end{intro}
+
+\section{The \Reader{}}
+The \Reader{} is a generic name for any collection service. \Readers{}
+can read lines out of a local file, they might be required to contact a device
+and pull information, or they might be embedded in a more complex protocol such
+as RADIUS to enable other mechanisms such as authorization in conjunction with
+accounting.  A \Reader{} must be associated with a \Mediator{}, which is the next
+processor in the stream.
+
+There are a variety of \Reader{} types provided with \XCDR{}. Some of these are
+generic, but many are specific to certain types of devices. The current built-in
+\Reader{} types are as follows:
+
+\begin{itemize}
+\item \emph{LocalFileReader}
+\item \emph{QuintumCDRServer}
+\item \emph{CiscoCDRServer}
+\item \emph{RadiusReader}
+\item \emph{SIPReader}
+\end{itemize}
+
+The \Readers{} have no concept of the content of the data they process; instead, they
+are only aware of the protocol for acquiring a record. Key in \Reader{} operation is
+how it initializes itself. This initialization may require logging in to a device,
+forwarding to a particular position in a file, or a number of other parameters. Some
+of these operations may require configuration, and the console reflects this when
+deploying \Readers{} on the network. The universal logic of every \Reader{} is
+described in algorithm~\vref{readerlogicflow}:
+
+\begin{algorithm}[H]
+  \SetLine
+  \dontprintsemicolon
+%  \AlgData{this text}
+%  \AlgResult{how to write}
+  
+  initialization\;
+  \While{no shutdown called}{
+    read current record\;
+    use \Mediator{} to classify record\;
+    write record to internal buffer\;
+    \If{threshold reached}{
+      place contents of buffer in processing queue\;
+    }{}
+    \If{\Mediator{} is backlogged}{
+      idle until \Mediator{} catches up\;
+    }
+  }
+  \caption{Reader Logic Flow\label{readerlogicflow}}
+\end{algorithm}
+
+Three things notable about this process: records are \emph{buffered} to increase
+thoroughput; \emph{thresholds} are used to flush the buffer at regular intervals
+or when the buffer is full; and the \Reader{} will wait for the \Mediator{} to
+catch up before processing more records in order to prevent processing queues from
+becoming over-full.
+
+\begin{figure}[htbp]
+\hspace*{0.75in}
+\epsfig{figure=test,width=1in}
+\caption{this is an image}
+\label{fig:testing}
+\end{figure}
+
+\section{Interaction with the \Mediator{}}
+
+Individual readers are created for each source file and all records therein
+are dumped directly to the CDR\_RAW table where they are picked up for
+processing.
+
+Readers are not specialized by GW manufacturer type (Sonus, MVAM, Cisco,
+Quintum, etc.) since they are only responsible for forwarding accounting
+traffic. They are however specialized by operation mode, and will mark
+the CDR type as coming from a particular GW and of a certain manufacturer
+type.
+
+
+\section{FileReaader}
+If the file will exist on the file system (for instance as a NFS mounted
+file, or a file created by a local CDR server), then the reader will read
+each line as it appears and insert it into the table.
+
+\section{CDRServer}
+The CDRServer reader is specialized for Quintum and will listen on a
+specified port for incoming records and send ACK's on successful insertion.
+
+\section{RADIUSReader}
+The RADIUSReader will use XTRadius to receive Accounting records, insert
+them and send an ACK on successful insertion. Any other type of RADIUS
+traffic (Authorization and Authentication) is unrecognized at this point.
+
+\section{Mediator}
+The Mediators are responsible for retrieving records from CDR\_RAW and
+parsing them into an internal representation which will be stored in
+the CDR table. The CDR is at this point unrated and should be picked
+up by the mediation engine.
+
+Records that cannot be parsed will be placed in the UNRESOLVABLES table.
+
+The Mediators are specialized by GW manufacturer:
+
+\begin{itemize}
+  \item Sonus GSX
+  \item Lucent MVAM
+  \item Siemens DCO
+  \item Quintum (Tenor and CMS)
+  \item Cisco (AS5400 and equivalent)
+  \item Other? (Mera, Vocaltec, Clarnet)
+\end{itemize}
+
+The Mediators are responsible for selecting the appropriate records
+for processing and performing any de-duplication if necessary. MVAM
+in particular is notorious for unusual conditions. On the DCO, the
+primary and secondaries need to merged.
+
+\section{Engine}
+The billing engine is responsible for mediating the CDR into a billable
+format. The billing process includes a number of lookups into various
+tables. Ultimately the matching is done by
+
+%	Customer = LookupCustomer( ip )
+
+%	(Call Type, Origination, Destination) -> Rate 
+
+%	Price = Rate * Billable\_Duration
+
+Billed records will be placed in the SDR (Service Detail Record) table.
+Records missing critical information will be placed in the exceptions
+table.
+
+Call Type is a combination of the following cases:
+
+\begin{itemize}
+  \item tollfree / charge (800/888/877)
+  \item inter-/intra-state
+  \item inter-/intra-LATA
+  \item RBOC/Non-RBOC
+  \item local/international
+  \item payphone (\$0.35 surcharge)
+  \item prison
+  \item information (555-1212) / out of state information
+\end{itemize}
+
+For example, in the case of tollfree, the Origination number will be
+used as the Destination for rate determination on the basis of the
+rates provided for the customer providing tollfree traffic which
+passes through this gateway.
+
+\section{Performance}
+One of the primary concerns of a mediation/billing system is simply how many
+records can be handled per second. On a relatively meager system which is
+bound by having only 256 MB of RAM the system has shown in early phases to
+reach speeds of over 1000 calls per second. This means that it is handling
+nearly twice that number of records per second as you generally see START/STOP
+record combinations forming a single call.
+
+The image below shows mediation of around 75,000 calls in under two minutes.
+%<inlinemediaobject>
+%<imageobject> <imagedata fileref="graphs/med.png"> </imageobject>
+%<imageobject> <imagedata fileref="graphs/med.ps"> </imageobject>
+%</inlinemediaobject>
+Along the X-axis is the number of seconds since the start of processing. The
+Y-axis shows the number of records.
+
+The next graph shows the calls per second of the system for the same run.
+%<inlinemediaobject>
+%<imageobject> <imagedata fileref="graphs/cps.png"> </imageobject>
+%<imageobject> <imagedata fileref="graphs/cps.ps"> </imageobject>
+%</inlinemediaobject>
+%</para>
+%</sect1>
+%<!--
+
+\endinput
+

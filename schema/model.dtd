@@ -1,0 +1,27 @@
+<!ELEMENT attrib EMPTY >
+<!ATTLIST attrib name NMTOKEN #REQUIRED >
+<!ATTLIST attrib profile NMTOKEN #REQUIRED >
+<!ATTLIST attrib width NMTOKEN #IMPLIED >
+
+<!ELEMENT entity ( attrib+ ) >
+<!ATTLIST entity name NMTOKEN #REQUIRED >
+<!ATTLIST entity type NMTOKEN #REQUIRED >
+
+<!ELEMENT model ( typedef, entity, relation ) >
+<!ATTLIST model adaptor NMTOKEN #REQUIRED >
+<!ATTLIST model name NMTOKEN #REQUIRED >
+<!ATTLIST model version NMTOKEN #REQUIRED >
+
+<!ELEMENT profile EMPTY >
+<!ATTLIST profile allowNull NMTOKEN #REQUIRED >
+<!ATTLIST profile default NMTOKEN #IMPLIED >
+<!ATTLIST profile externalType NMTOKEN #REQUIRED >
+<!ATTLIST profile name NMTOKEN #REQUIRED >
+<!ATTLIST profile precision NMTOKEN #IMPLIED >
+<!ATTLIST profile sign NMTOKEN #IMPLIED >
+<!ATTLIST profile type CDATA #REQUIRED >
+<!ATTLIST profile width NMTOKEN #IMPLIED >
+
+<!ELEMENT relation EMPTY >
+
+<!ELEMENT typedef ( profile+ ) >

@@ -1,0 +1,1 @@
+Data type of a MySQL bool is "tinyint(1)" 0=false, 1=true

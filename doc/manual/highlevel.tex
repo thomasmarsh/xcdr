@@ -1,0 +1,253 @@
+\chapter{Highlevel Architecture Description}
+
+\begin{intro}
+The first part of this chapter presents a short overview
+of the philosophy of \XCDR{}. The second part
+focuses on the basic elements involved in the \XCDR{} system.
+After reading this chapter, you should have a rough knowledge
+of how \XCDR{} works, which you will need to understand the rest
+of this book.
+\end{intro}
+
+\section{Overview of \XCDR{}}
+
+	\XCDR{} is the suite of applications which define a generic mediation and
+	billing system suitable for anything from the small ISP who wishes to charge,
+	for example, users for their disk usage, to the telephony wholesale carrier
+	with a worldwide network. Due to its modular design (based upon a series of
+	generators providing information to the next process in line) it has proven
+	to be at least ten times faster (1000 cps) on inexpensive
+	hardware.\footnote{The test system at the time of initial development was a
+		PC running Linux. The CPU was an Athlon-XP 1.6 GHz, 256 Mb RAM
+		was available, and a standard IDE controller was used (i.e., no
+		SCSI or RAID which yield much better system performance). The
+		system was inserting billing records into a MySQL v4.0.13
+		database.}
+
+	The basic tenets of the \XCDR{} architecture are:
+
+	\begin{itemize}
+	  \item Process data as soon as it is available
+	  \item Each functional processing unit should perform one task, and that task should be performed well (a UNIX tenet)
+	  \item Doing a job well means: fast, simple, distributable across the network, and easily configurable
+	\end{itemize}
+
+	To meet its design goals, \XCDR{} defines the following operational contexts:
+
+	\begin{itemize}
+	  \item Collection
+	  \item Authorization
+	  \item Routing
+	  \item Mediation
+	  \item Rating
+	  \item Error Handling
+	  \item Monitoring
+	  \item Reporting
+	\end{itemize}
+
+	Further operational contexts that may be implemented in the future are:
+	\begin{itemize}
+	  \item Invoicing
+	  \item Taxation
+	\end{itemize}
+
+	For now, it is intended that 3rd party products be used for these purposes.
+%	<!--em>TODO: mention Oracle Financials, QuickBooks, etc.. here.</em-->
+
+	With the combination of database replication the various components of the
+	system, the process of billing activity on the network can be split across
+	multiple database or machine boundaries providing for arbitrary scalability.
+	You can place collection points and mediators close to the source
+	(networkologically close to the gateway) to avoid bandwidth consumption at
+	this point. The records may be forwarded to a single database for billing,
+	or even the rating instance may be run simultaneously on multiple machines,
+	providing that a round-robinning scheme is specified.
+
+
+	\index{collection}\section{Collection}
+		The point of entry of any service activity is via a collection point, or
+		a \index{Reader}\emph{Reader}. A simple example of a \emph{Reader} is the
+		\index{LocalFileReader}\emph{LocalFileReader} which reads individual
+		lines from a file (each
+		line indicating accounting for a type of service) and serves as the entry
+		point to the billing process. Another, more complicated, collection
+		service might be bundled with Authorization, as in a RADIUS, or SIP
+		server.
+
+	\index{authorization}\section{Authorization}
+		Like collection, authorization is another entry point into the billing
+		system for external services. An authorization consists of actions such
+		as determining whether a customer has exceeded his credit limit, or if
+		a prepaid caller has any balance left. In general, this service requires
+		a set of inputs, and based upon site implementation rules, allows or
+		denies the user to continue with a certain action.
+
+		A concrete example of an authorization service would be an prepaid calling
+		card IVR system which authorizes via RADIUS. The customer dials an access
+		number, enters their PIN, hears a statement about their account (``You have
+		fifteen dollars and thirty-two cents remaining''), enters a destination
+		number, is connected and talks, and is disconnected by the system when
+		their time limit is exceeded. From the authorization standpoint, the
+		system actions are:
+		\begin{itemize}
+		  \item check that the account number is valid
+		  \item return a balance, currency, and preferred language (optional) to the IVR server
+		  \item calculate the maximum amount of time the user may speak for the provided destination (actual, and announced)
+		  \item if any of the above operations fails, send a REJ (reject) packet back to the IVR server.
+		\end{itemize}
+
+	\index{routing}\section{Routing}
+		In the telephony environment an expectation of the billing
+		system is that it can act as a gatekeeper. This is due to the fact that
+		the billing system contains:
+		\begin{itemize}
+		  \item knowledge of all billable gateways,
+		  \item knowledge of routes between gateways,
+		  \item the costs associated with certain vendors/routes,
+		  \item the current Average Success Ratio (ASR) for each route, and
+		  \item the capacity of each route.
+		\end{itemize}
+
+		Using the above information plus user inputs (such as ``round-robin
+		percentages''), the billing system can serve dynamic routes to gateways
+		using customer specific criteria.
+
+	\index{mediation}\section{Mediation}
+		The mediation service is completely internal to the operation of the
+		billing system. It is affected by site specific implementation, but is
+		not exposed to external services utilizing the billing system. Mediation
+		is the process of translating collected records into Service Detail
+		Records (SDRs), or, in other words, a uniform internal representation
+		that can be handled by the billing system for purposes of rating and
+		reports.
+
+		For every type of input, a mediation service is required. An example
+		would be a mediator for \VOIP gateway which produces a text Call Detail
+		Record (CDR) file. The CDRs are in a vendor specific format and may
+		require that multiple records be grouped together before a service
+		usage may be billed, as in the case where the gateway produces START, STOP,
+		and INTERMEDIATE records. Together, the mediator may perform the following
+		actions (in some cases as a service to the collection process):
+
+		\begin{itemize}
+		  \item provide a unique identifier for a usage
+		  \item determine that a usage has completed (or will not complete), and
+		        begin the conversion to an SDR
+		  \item associate an activity type to the usage
+		  \item determine any variables relevant to billing (e.g., start time, stop
+		        time, time zone, duration, if a call is from a pay phone)
+		  
+		  \item insert an SDR into the processing stream, and clear the usage
+			from the collection records
+		\end{itemize}
+
+		Obviously, the mediator does a lot, seeming to break one of the
+		architectural tenets, but they actually tend to be very simple.
+		You may read more about the implementation of mediators in section XXX.
+
+	\section{Rating}
+		By far, the majority of the interaction with the billing system consists
+		of maintaining rating information. \XCDR{} tries to achieve flexibility
+		without sacrificing efficiency. To this end, the \emph{Rater} tends
+		to operate like an in-memory database, highly specific to a specific
+		task. The user interaction with the \emph{Rater} consists of:
+		\begin{itemize}
+		  \item defining customers (revenues) and vendors (costs);
+		  \item specifying the means of identification of customers and vendors (e.g., gateway IP address, egress trunk group, PIN number);
+		  \item providing lists of products, tariffs, and rates;
+		  \item specification of other rating parameters (e.g., surcharges, flat rates, discounts, duration base intervals (rounding) and brackets, holiday rates, etc.)
+		\end{itemize}
+
+		The rater tends to be quite fast (in excess of 14,000 rates applied per
+		second on test systems), but the main concern is actually one of
+		administration: firstly, some administrative staff member has to maintain
+		large amounts of data to be utilized by the system; secondly, as there may
+		be multiple rating instances in operation in the network, \XCDR{} must
+		smartly update all rating instances with updated information (new rates,
+		new customer, canceled rates, etc.)
+
+	\section{Error Handling}
+		The number of components involved in the mediation process require
+		an effective means of handling error conditions. When a \emph{Reader} is
+		unable to read, the chain of processes is broken from that source. Coupled
+		with \emph{Monitoring} (the next topic), errors at any point should be
+		flagged with detail appropriate to the context. For example, when rating
+		a telephone call it is necessary to identify which time zone the caller
+		is coming from. If this cannot be done, then the activity should be marked
+		with the appropriate error code, and the detail necessary to correct
+		the situation.
+
+		Another task necessary when handling an error is to move it out of the
+		main processing stream. Each generator reads from a queue of pending
+		entries. The larger this queue, the slower the read operations will be
+		on those queues. As such, a large number of stale records with exception
+		flags would result in a massive slowdown should they remain (and further
+		accumulate) in the main processing stream.
+
+		Further, as an optimization, each component will, if possible, remember
+		the types of exceptions it has already encountered, and prevent undue
+		processing of a subsequent record which has the same issue.
+
+	\section{Monitoring}
+		A critical aspect of interaction with the billing system is monitoring.
+		The users need to keep track of account balances, error conditions,
+		quality of service, and possible fraudulent usage. As well, errors
+		encountered by the billing system may indicate adverse conditions
+		in the network that may not be detected by traditional monitoring
+		mechanisms.
+
+		\XCDR{} modules do not directly push information to users
+		regarding error conditions. Instead, \XCDR{} provides, internally, a
+		system of counters and queues for keeping track of errors. At regular
+		intervals, these may be polled for certain criteria.
+
+		The preferred method of monitoring \XCDR{} is via \index{SNMP}SNMP.
+		Third-party products such as HP OpenView can import the \XCDR{} MIB
+		file and, from a consolidated standard interface, the administrator may
+		monitor the billing system in the same way as other network components.
+
+		For environments where SNMP is overkill, \XCDR{} provides a few,
+		simpler, alternatives. Users, may view the current status of \XCDR{}
+		by going to the administrative web console. To receive alerts in an
+		automated fashion, an email delivery system is also provided. Email
+		notification is the only push mechanism provided with \XCDR{}. If the
+		user requires other mechanisms (pager notification, SMS, a telephone
+		call), this should be implemented through an email gateway.  Of course,
+		most SNMP based tools already support diverse notification methods.
+
+	\section{Reporting}
+		A wealth of information is available about the status of business
+		operations through the billing system. The types of
+		reports one usually wishes to see are:
+
+		\begin{itemize}
+		\item ASR reports showing the number of successful operations as compared
+		      to failures,
+		\item cost/revenue reports indicating the profitability of provided
+		      services,
+		\item usage profiles describing which products are highly used and
+		      in what ways, and
+		\item error reports showing billing errors which need to be corrected
+		      by the administrator.
+		\end{itemize}
+
+		For each of the reports, there is the need to ``drill down'' from a
+		high level view into detailed views. This process of descent into detail
+		must be available via many paths so that the administrator can see
+		different groupings of data. Some examples of detailed views in a
+		telephony environment include:
+
+		\begin{itemize}
+		\item grouping by gateway, showing statistics only for a single node
+		      on the network;
+		\item grouping by origination/destination, in which totals are shown for
+		      each country or other administrative region (tariff zone, city or
+		      province); and
+		\item grouping by customer or vendor, so that totals are shown only for
+		      a particular billing entity.
+		\end{itemize}
+
+\section{Where to Go From Here}
+This chapter has introduced the functional areas of \XCDR{}. Each is treated in more
+detail in subsequent chapters.
+\endinput

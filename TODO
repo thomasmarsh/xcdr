@@ -1,0 +1,172 @@
+---------------------------------------------------------------------------
+- TODO File for XCDR
+---------------------------------------------------------------------------
+
+Every todo is clasified with a few modifiers to indicated the effect they
+have on XCDR. The following modifiers can be given:
+
+	[P]: Performance
+	     This would improve performance of the system
+
+	[S]: Stability
+	     This would improve stability of the system
+
+	[R]: Requirement
+	     This is a requirement of system operation
+
+	[E]: Enhancement
+	     This is an optional nice-to-have enhancement
+
+	[O]: Organizational
+	     Improves maintainability of the code
+
+	[?]: Open Questions
+	     These are issues that have no defined resolution
+
+	[*]: Finished
+
+
+---------------------------------------------------------------------------
+0. CONTENTS
+---------------------------------------------------------------------------
+
+The TODO list is broken down into the following functional areas:
+
+	1. Build
+	2. Common
+	3. Database
+	4. Reader
+	5. Mediator
+	6. Billing Engine
+	7. Front End
+	8. Back End
+	9. Documentation
+
+
+---------------------------------------------------------------------------
+1. BUILD
+---------------------------------------------------------------------------
+
+	[E]  Reduce the amount of output from the autoconf system.
+
+	[R]  Incorporate documentation into build process
+
+	[R]  Decide upon a packaging format (Redhat+RPM? -Have spec file;
+	     Custom packaging?)
+
+
+---------------------------------------------------------------------------
+2. COMMON
+---------------------------------------------------------------------------
+
+	[E]  support module directives in logging, e.g.:
+
+		// clear all current filters for 
+		Log::filter.clear("Reader::DB");
+
+		// set some new filters
+		Log::filter.set("Reader::DB", Log::Debug);
+		Log::filter.set("FileStream", Log::Debug | Log::Trace);
+
+		// set to default for all modules
+		Log::filter.default();
+
+	[R]  RDBM::Connection should reconnect when the connection is
+	     stale. (Seems to be happening automatically?)
+
+	[O]  Create incoming file module to abstract from Reader and
+             Mediator both trying to keep track of filehandles.
+
+	[R]  complete XCDR.mib
+
+	[R]  write C++ abstraction layer for SNMP; or use OpenSNMP
+
+	[R]  Start using ICU messages
+
+	[E]  Internationalize debug/trace messages
+
+	[*]  Move entity.h and entity.cc to a separate library.
+
+
+---------------------------------------------------------------------------
+3. DATABASE
+---------------------------------------------------------------------------
+
+	[O]  implement database wrapper (mostly done as thin wrapper around
+	     mysqlcppapi)
+
+	[R]  load Profile and ApplicationProfile from database (currently
+	     only done for Reader.
+
+	[E]  Implement SQL schema XML with versioning.
+
+	[R]  The XML Model parser needs to keep track of profile/attrib
+	     flags. If primaryKey is set in the profile, then the attrib
+	     should check '(bool) p.hasattr["primaryKey"]'.
+
+
+---------------------------------------------------------------------------
+4. READER
+---------------------------------------------------------------------------
+
+	[R]  startUp() should get last_offset from the database.
+
+	[R]  poll TaskList for shutdown (every 5 sec?) and flush
+	     line_buffer before shutdown (CommandProcessor, and Commands)
+
+	[R]  should poll directories looking for new files and process in
+	     order
+
+	[R]  Reader should copy the file into a local cache in $HOME/var/cache
+
+
+---------------------------------------------------------------------------
+5. MEDIATOR
+---------------------------------------------------------------------------
+
+	[R]  Finalize mediator architecture
+
+	[R]  Support mediation of non-telco types and generalize the
+	     activity types
+
+
+---------------------------------------------------------------------------
+6. BILLING ENGINE
+---------------------------------------------------------------------------
+
+	[R]  Support for flat rates / prices / surcharges
+
+	[R]  Integrate Periods into rater
+
+	[R]  Apply effective start/end dates (UDate/ICU integration)
+
+
+---------------------------------------------------------------------------
+7. FRONT END
+---------------------------------------------------------------------------
+
+	[R]  Support online payments; port Business::OnlinePayment to C++;
+	     see: /usr/lib/perl5/site_perl/5.8.0/Business/OnlinePayment
+
+	[?]  Use PB-100 interface? Custom (PHP, C++, J2EE)?
+
+
+---------------------------------------------------------------------------
+8. BACK END
+---------------------------------------------------------------------------
+
+	[R]  Provide xcdrd process management
+
+	[R]  Pull out the ReducingMap from the lerg utility and provide
+	     an automated facility for reloading the rater/engine.
+
+
+---------------------------------------------------------------------------
+9. DOCUMENTATION
+---------------------------------------------------------------------------
+
+	[R]  Write User Manual
+
+	[R]  Write Adminstrator Manual
+
+	[R]  Write Extension Development Guide

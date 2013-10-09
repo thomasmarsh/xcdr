@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="iso-8559-1"?>
+<!DOCTYPE xcdr SYSTEM "xcdr.dtd">
+<!-- @version: -->
+
+<db-schema>
+
+    <table name="CDR_Raw"
+           type="MyISAM">
+
+	<column name="cdr_data"
+                type=/>
+
+        <column name="raw_cdr"
+		type="BLOB"
+                null="false"
+		default="N"
+		extra=""/>
+
+    </table>
+
+<!--
+DROP TABLE IF EXISTS CDR_RAW;
+CREATE TABLE CDR_RAW
+(
+	tstamp		DATETIME			NOT NULL,
+	i_reader	INT(10) UNSIGNED		NOT NULL,
+	cdr		BLOB				NOT NULL
+) TYPE=MyISAM;
+
+-->
+
+</xcdr:schema>
+
+<!--
+
+DROP TABLE IF EXISTS Readers;
+CREATE TABLE Readers
+(
+	i_reader	INT(10) UNSIGNED		NOT NULL AUTO_INCREMENT,
+	type		ENUM ('FILE', 'RADIUS', 'CDR')	NOT NULL DEFAULT 'FILE',
+	PRIMARY KEY (i_reader)
+) TYPE=MyISAM PACK_KEYS=1;
+
+
+DROP TABLE IF EXISTS FileReaderDetails;
+CREATE TABLE FileReaderDetails
+(
+	i_reader	INT(10) UNSIGNED		NOT NULL,
+	name		VARCHAR(255)			NOT NULL,
+	directory	VARCHAR(255)			NOT NULL,
+	type		ENUM ('P', 'S')			NOT NULL DEFAULT 'P',
+	PRIMARY KEY (i_reader)
+) TYPE=MyISAM;
+
+DROP TABLE IF EXISTS FileReaderLog;
+CREATE TABLE FileReaderLog
+(
+	i_reader	INT(10) UNSIGNED		NOT NULL,
+	filename	VARCHAR(255)			NOT NULL,
+	position	INT(10) UNSIGNED		NOT NULL,
+) TYPE=MyISAM;
+
+
+DROP TABLE IF EXISTS CDR;
+CREATE TABLE CDR
+(
+	i_cdr_id	INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (i_cdr_id)
+) TYPE=MyISAM;
+
+
+DROP TABLE IF EXISTS Nodes;
+CREATE TABLE Nodes
+(
+	--
+	-- IDENTIFIERS
+	--
+
+	i_node	INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+	ip	CHAR(64) NOT NULL DEFAULT '',
+	h323_id	CHAR(255) NOT NULL DEFAULT '',
+
+	hostname CHAR(255) DEFAULT NULL,
+	domain	CHAR(255) DEFAULT NULL,
+
+	--
+	-- USER DATA
+	--
+
+	description CHAR(255) NOT NULL DEFAULT '',
+
+	--
+	-- TECHNICAL DATA
+	--
+
+	ports	INT(11) DEFAULT NULL,
+	type	ENUM('VOIP-GW', 'H323-GW', 'H323-GK', 'TERM', 'MCU')
+		NOT NULL DEFAULT 'VOIP-GW',
+	manufacturer ENUM('CISCO', 'QUINTUM', 'SONUS', 'MVAM', 'DCO')
+		NOT NULL DEFAULT 'CISCO',
+
+	i_time_zone SMALLINT(3) NOT NULL DEFAULT '0',
+
+
+	--
+	-- RADIUS DATA
+	--
+
+	radius_client ENUM('Y', 'N') NOT NULL DEFAULT 'N',
+	radius_key CHAR(32) DEFAULT NULL,
+
+
+	PRIMARY KEY (i_node),
+	UNIQUE KEY h323_id (h323_id),
+	UNIQUE KEY ip (ip)
+) TYPE=MyISAM;
+
+
+DROP TABLE IF EXISTS Rates;
+CREATE TABLE Rates
+(
+	i_rate INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+	i_dest INT(10) UNSIGNED NOT NULL DEFAULT '0',
+
+	interval_1 SMALLINT(3) UNSIGNED NOT NULL DEFAULT '0',
+	interval_n SMALLINT(3) UNSIGNED NOT NULL DEFAULT '0',
+
+	price_1 FLOAT(9,5) UNSIGNED NOT NULL DEFAULT '0.00000',
+	price_n FLOAT(9,5) UNSIGNED NOT NULL DEFAULT '0.00000',
+
+	PRIMARY KEY (i_rate)
+) TYPE=MyISAM;
+
+
+DROP TABLE IF EXISTS Xfer;
+CREATE TABLE Xfer
+(
+	tid	CHAR(32)	NOT NULL,
+	tstamp	DATETIME	NOT NULL,
+
+	PRIMARY KEY (tid)
+
+) TYPE=MyISAM PACK_KEYS=1; -->

@@ -1,0 +1,190 @@
+                           XCDR
+
+		A CDR-Based Billing Engine for
+		 Arbitrary Scalability in the
+		        Carrier Market
+
+
+		      Thomas D. Marsh
+
+
+0. INTRODUCTION
+---------------
+
+XCDR is a call mediation engine used for telco billing.  CDRParse
+supports arbitrary scalable call volumes by separation of collection,
+mediation and billing across multiple machines for wholesale VoIP
+traffic; as well it supports the North American telephony billing model,
+taking into account tariff zones, complex requirements from other
+vendors and customers.
+
+It is designed from the ground up to handle CDR records, which are single
+line records in a compact format giving call details for finished calls.
+Every gateway supports output of CDR's natively, though each has a different
+format and different details therein. The XCDR architecture therefore
+consists of various isolatable elements to handle this diversity and
+maintain speed.
+
+The three components are Readers, Handlers, and the BillingEngine. Readers
+are universal and simply monitor a directory for files, and copy records
+contained within the files and copies them in realtime into the database.
+While doing so it also notes pertinent information for the Handlers, such as
+what type of gateway the record is from, when the record was copied, etc.
+The Handlers are specialized for different gateways. A Sonus Handler will
+only pick up Sonus records from the incoming table. It is the job of the
+handler to convert the CDR into an internal universal representation of
+a CDR, or the SDR (Service Detail Record). SDR's are processed by the
+BillingEngine and then inserted into the finalized table which contains
+rated records (those with a price attached) ready for importation into
+the PortaBilling system.
+
+With the combination of database replication the three components (Reader,
+Handler, and BillingEngine) can be split across multiple database or
+machine boundaries providing for arbitrary scalability. You can place
+Readers and Handlers close to the source (networkologically close to
+the gateway) to avoid bandwidth consumption at this point. The records
+can be forwarded to a single database for billing, or even the BillingEngine
+may be run simultaneously on multiple machines, providing that a system
+is implemented for round-robinning the SDR's to the various billing engines.
+
+
+1. READERS
+----------
+
+Individual readers are created for each source file and all records therein
+are dumped directly to the CDR_RAW table where they are picked up for
+processing.
+
+Readers are not specialized by GW manufacturer type (Sonus, MVAM, Cisco,
+Quintum, etc..) since they are only responsible for forwarding accounting
+traffic. They are however specialized by operation mode, and will mark
+the CDR type as coming from a particular GW and of a certain manufacturer
+type.
+
+
+1.1 FileReader
+
+If the file will exist on the file system (for instance as a NFS mounted
+file, or a file created by a local CDR server), then the reader will read
+each line as it appears and insert it into the table.
+
+
+1.2 CDRServer
+
+The CDRServer reader is specialized for Quintum and will listen on a
+specified port for incoming records and send ACK's on successful insertion.
+
+
+1.3 RADIUSReader
+
+The RADIUSReader will use XTRadius to receive Accounting records, insert
+them and send an ACK on successful insertion. Any other type of RADIUS
+traffic (Authorization and Authentication) is unrecognized at this point.
+
+
+2. HANDLERS
+-----------
+
+The handlers are responsible for retrieving records from CDR_RAW and
+parsing them into an internal representation which will be stored in
+the CDR table. The CDR is at this point unrated and should be picked
+up by the mediation engine.
+
+Records that cannot be parsed will be placed in the UNRESOLVABLES table.
+
+The Handlers are specialized by GW manufacturer:
+
+- Sonus GSX
+- Lucent MVAM
+- Siemens DCO
+- Quintum (Tenor and CMS)
+- Cisco (AS5400 and equivalent)
+- Other? (Mera, Vocaltec, Clarnet)
+
+The Handlers are responsible for selecting the appropriate records
+for processing and performing any de-duplication if necessary. MVAM
+in particular is notorious for unusual conditions. On the DCO, the
+primary and secondaries need to merged.
+
+
+3. BILLING ENGINE
+-----------------
+
+The billing engine is responsible for mediating the CDR into a billable
+format. The billing process includes a number of lookups into various
+tables. Ultimately the matching is done by
+
+	Customer = LookupCustomer( ip )
+
+	(Call Type, Origination, Destination) -> Rate 
+
+	Price = Rate * Billable_Duration
+
+Billed records will be placed in the SDR (Service Detail Record) table.
+Records missing critical information will be placed in the exceptions
+table.
+
+Call Type is a combination of the following cases:
+
+	- tollfree / charge (800/888/877)
+	- inter-/intra-state
+	- inter-/intra-LATA
+	- RBOC/Non-RBOC
+	- local/international
+	- payphone ($0.35 surcharge)
+	- prison
+	- information (555-1212) / out of state information
+
+For example, in the case of tollfree, the Origination number will be
+used as the Destination for rate determination on the basis of the
+rates provided for the customer providing tollfree traffic which
+passes through this gateway.
+
+
+4. ACCOUNTING ENGINE
+--------------------
+
+[PROVISORY]
+
+The accounting engine will periodically update account information to
+reflect the current traffic. In the case of prepaid or authorized traffic
+the accounting engine will invoke directly from the billing engine in
+order to prevent credit limits from being exceeded.
+
+
+5. INTEGRATION TO 3RD PARTY TOOLS
+---------------------------------
+
+Important for the customer specifically is the ability to forward accounting
+information to Oracle Financials and to integrate with their 3rd party
+taxation software.
+
+
+6. PORTABILLING-100 INTEGRATION
+-------------------------------
+
+After BillingEngine operation it is possible to insert records into
+the PortaBilling-100 database tables directly and from there further
+receive interesting reports and graphs.
+
+If the system is to be maintained from PB-100 web interface, then only:
+
+ - additional screens would need to be added for the maintenance of readers,
+
+ - an extra column in the destinations table for grouping of destinations
+   (perhaps another for providing an inheritance hierarchy),
+
+ - the nodes interface should be modified to allow the flag "only for
+   reader processing" indicating that a CDR reader pair should be provided
+   for this gateway
+ 
+
+Other interesting notes regarding PortaOne's billing UI and data schema:
+
+ - There are only Customers. There is no concrete need to provide accounting
+   for Vendors.
+
+ - There are not any prepaid services. (There were at one time, so maybe they
+   will resume at some time?)
+
+ - We do not use one half of the PB-100 Product, just the user interface.

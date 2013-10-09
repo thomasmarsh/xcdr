@@ -1,0 +1,113 @@
+\chapter{Compenents in Detail}
+
+\section{Reader}
+
+Individual readers are created for each source file and all records therein
+are dumped directly to the CDR\_RAW table where they are picked up for
+processing.
+
+Readers are not specialized by GW manufacturer type (Sonus, MVAM, Cisco,
+Quintum, etc.) since they are only responsible for forwarding accounting
+traffic. They are however specialized by operation mode, and will mark
+the CDR type as coming from a particular GW and of a certain manufacturer
+type.
+
+
+\section{FileReaader}
+If the file will exist on the file system (for instance as a NFS mounted
+file, or a file created by a local CDR server), then the reader will read
+each line as it appears and insert it into the table.
+
+\section{CDRServer}
+The CDRServer reader is specialized for Quintum and will listen on a
+specified port for incoming records and send ACK's on successful insertion.
+
+\section{RADIUSReader}
+The RADIUSReader will use XTRadius to receive Accounting records, insert
+them and send an ACK on successful insertion. Any other type of RADIUS
+traffic (Authorization and Authentication) is unrecognized at this point.
+
+\section{Mediator}
+The Mediators are responsible for retrieving records from CDR\_RAW and
+parsing them into an internal representation which will be stored in
+the CDR table. The CDR is at this point unrated and should be picked
+up by the mediation engine.
+
+Records that cannot be parsed will be placed in the UNRESOLVABLES table.
+
+The Mediators are specialized by GW manufacturer:
+
+\begin{itemize}
+  \item Sonus GSX
+  \item Lucent MVAM
+  \item Siemens DCO
+  \item Quintum (Tenor and CMS)
+  \item Cisco (AS5400 and equivalent)
+  \item Other? (Mera, Vocaltec, Clarnet)
+\end{itemize}
+
+The Mediators are responsible for selecting the appropriate records
+for processing and performing any de-duplication if necessary. MVAM
+in particular is notorious for unusual conditions. On the DCO, the
+primary and secondaries need to merged.
+
+\section{Engine}
+The billing engine is responsible for mediating the CDR into a billable
+format. The billing process includes a number of lookups into various
+tables. Ultimately the matching is done by
+
+%	Customer = LookupCustomer( ip )
+
+%	(Call Type, Origination, Destination) -> Rate 
+
+%	Price = Rate * Billable\_Duration
+
+Billed records will be placed in the SDR (Service Detail Record) table.
+Records missing critical information will be placed in the exceptions
+table.
+
+Call Type is a combination of the following cases:
+
+\begin{itemize}
+  \item tollfree / charge (800/888/877)
+  \item inter-/intra-state
+  \item inter-/intra-LATA
+  \item RBOC/Non-RBOC
+  \item local/international
+  \item payphone (\$0.35 surcharge)
+  \item prison
+  \item information (555-1212) / out of state information
+\end{itemize}
+
+For example, in the case of tollfree, the Origination number will be
+used as the Destination for rate determination on the basis of the
+rates provided for the customer providing tollfree traffic which
+passes through this gateway.
+
+\section{Performance}
+One of the primary concerns of a mediation/billing system is simply how many
+records can be handled per second. On a relatively meager system which is
+bound by having only 256 MB of RAM the system has shown in early phases to
+reach speeds of over 1000 calls per second. This means that it is handling
+nearly twice that number of records per second as you generally see START/STOP
+record combinations forming a single call.
+
+The image below shows mediation of around 75,000 calls in under two minutes.
+%<inlinemediaobject>
+%<imageobject> <imagedata fileref="graphs/med.png"> </imageobject>
+%<imageobject> <imagedata fileref="graphs/med.ps"> </imageobject>
+%</inlinemediaobject>
+Along the X-axis is the number of seconds since the start of processing. The
+Y-axis shows the number of records.
+
+The next graph shows the calls per second of the system for the same run.
+%<inlinemediaobject>
+%<imageobject> <imagedata fileref="graphs/cps.png"> </imageobject>
+%<imageobject> <imagedata fileref="graphs/cps.ps"> </imageobject>
+%</inlinemediaobject>
+%</para>
+%</sect1>
+%<!--
+
+\endinput
+

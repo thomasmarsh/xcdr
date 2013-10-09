@@ -1,0 +1,124 @@
+Application logic should be as follows:
+
+	[ 1: INIT ]
+	- check database for call flag types:
+
+		- state
+		- ocn
+		- lata
+		- country
+
+	  If the flag is not set, then we don't need to load those values, though
+	  an informational message should be produced that we are ignoring it.
+
+	- read 'tz_loc' file for loc_name -> timezone mapping.
+	  later, if we can't find a map then we should append it to the save list
+	  and produce a 'tz_unknown' file.
+
+	- read 'country_map' for state->country mapping
+
+
+	[ 2: PROCESSING ]
+
+	- read the lerg text file, and hash the appropriate values
+
+	- perform reduction
+
+
+	[ 3: WRITE ]
+
+	- pull existing detinations out of the database
+
+	- in blocks of 1000, cancel old entries and insert new entries
+
+	- insert all remaining new entries
+
+	- cancel all replaced entries (!)
+
+
+----------------------------------------------------------------------------------
+
+PHASE 2
+
+
+	Accept data in format:
+
+	NPA	NXX	STATE	OCN	LATA	LOC_NAME	DETAIL
+	123	456	TX	141	512	HOUSTON		Greater Houston Area
+	...	..	..	..	..	..		...
+
+	Accept data in format:
+
+	DEST	ISO	DETAIL
+	44	CZ	Czech Republic
+	4402	CZ	Prague, Czech Republic
+	4406	CZ	Prague, Czech Republic (mobile)
+
+
+----------------------------------------------------------------------------------
+
+RULES
+
+	:destflag:
+
+		unused -> 0;
+		country -> 1;
+		state -> 2;
+		timezone -> 3;
+		lata ->	4;
+		ocn -> 5;
+
+	:country:
+
+		flag(country) :- |dest iso_3661|
+			1201 US
+			1202 US
+			1203 US
+			1204 CA
+			1869 KN
+			1870 US
+			1876 JM
+			1900 US
+		;
+	
+	:flags:
+
+		international :-
+			(cli:iso_3661 != cld:iso_3661);
+
+		country_dest :-
+			(
+
+----------------------------------------------------------------------------------
+
+SERVER INTERACTION
+
+	- HELO ri32.quicknet.net	// identification
+	+ 100 OK			// ACK
+
+	- BEGN 1000 			// Notification of batch size
+	+ 101 READY 1000		// ACK
+
+	- CALL rambler,44255255,5225525,34,,,	// call data entries
+	- CALL rambler,44251435,5858485,124,,,
+	- CALL rambler,44255235,5225545,42,,,
+	- CALL rambler,44253455,5225782,859,,,
+	- CALL rambler,44254575,5255555,24,,,
+	- CALL rambler,44254755,5588486,255,,,
+	- CALL rambler,44234255,5228425,12,,,
+	- CALL rambler,44254575,5265484,0,,,
+	- CALL rambler,44575255,5545545,540,,,
+	- CALL rambler,44255635,5225825,392,,,
+	- CALL rambler,44265345,5275585,12,,,
+	- ...
+	- CALL rambler,44296893,5258785,15,,,
+	+ 102 RECVD 1000 245.42			// ACK, num recs, estimated time
+
+	+ 200 0 24.4122,USD,19,151,15,52	// Result entries
+	+ 200 1 52.33333,USD,19,151,15,52
+	+ 200 2 15.19363,USD,19,151,15,52
+	+ 200 3 35.15242,USD,19,151,15,52
+	+ 200 4 55.11254,USD,19,151,15,52
+	+ ..
+	+ 200 999 15.42,USD,12,125,63,63
+	- 

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<model name="XCDR" version="0.5" adaptor="default">
+
+  <!-- TYPEDEF PROFILES  -->
+
+  <typedef>
+    <profile name="uint"
+	     type="unsigned int"
+	     externalType="int"
+	     sign="unsigned"
+	     allowNull="false"/>
+    <profile name="timestamp"
+	     type="TimeStamp"
+	     externalType="timestamp"
+	     allowNull="true"/>
+    <profile name="datetime"
+	     type="DateTime"
+	     externalType="datetime"
+	     allowNull="false"/>
+    <profile name="bool"
+	     type="bool"
+	     externalType="tinyint"
+	     precision="1"
+	     default="0"
+	     allowNull="false"/>
+    <profile name="string"
+	     type="std::string"
+	     externalType="varchar"
+	     width="255"
+	     allowNull="false"/>
+    <profile name="offset"
+	     type="off_t"
+	     externalType="bigint"
+	     sign="unsigned"
+	     allowNull="false"/>
+  </typedef>
+
+  <!-- TABLE: CDR_Raw --> 
+
+  <entity name="CDR_Raw" type="InnoDB">
+    <attrib name="i_reader"	profile="uint"/>
+    <attrib name="i_node"	profile="uint"/>
+    <attrib name="i_node_type"	profile="uint"/>
+    <attrib name="i_cdr_type"	profile="uint"/>
+    <attrib name="t_timstamp"	profile="timestamp"/>
+    <attrib name="commited"	profile="bool"/>
+    <attrib name="call_id"	profile="string" width="64"/>
+    <attrib name="cdr_time"	profile="datetime"/>
+    <attrib name="cdr_offset"	profile="offset"/>
+  </entity>
+
+  <relation>
+  </relation>
+
+  <!-- REPOSITORY -->
+
+  <repository name="Reader">
+    <query name="setCommited" type="update" table="CDR_Raw">
+      <in>
+	<attrib name="i_reader"/>
+      </in>
+      <set>
+        <attrib name="commited" value="1"/>
+      </set>
+      <condition>
+	<equal attrib="commited" value="0"/>
+      </condition>
+    </query>
+  </repository>
+
+  <repository name="Mediator">
+    <query name="sonusCount" type="select" table="CDR_Raw">
+      <out>
+	<count/>
+      </out>
+      <condition>
+	<and>
+	  <equal attrib="i_node_type" value="1"/>
+	  <or>
+	    <equal name="i_cdr_type" value="5"/>
+	    <equal name="i_cdr_type" value="6"/>
+	  </or>
+	</and>
+      </condition>
+    </query>
+
+    <query name="sonusCallIDs" type="select" table="CDR_Raw" distinct="true" limit="500">
+      <out>
+	<attrib name="call_id"/>
+      </out>
+      <condition>
+	<and>
+	  <equal attrib="i_node_type" value="1"/>
+	  <or>
+	    <equal name="i_cdr_type" value="5"/>
+	    <equal name="i_cdr_type" value="6"/>
+	  </or>
+	</and>
+      </condition>
+    </query>
+
+    <query name="getOffsets" type="select" table="CDR_Raw">
+      <in>
+        <param type="std::list<std::string>" name="keys">
+      </in>
+      <out>
+	<attrib name="call_id"/>
+	<attrib name="cdr_offset"/>
+      </out>
+      <condition>
+        <in-seq attrib="call_id" param="keys"/>
+      </condition>
+      <order dir="desc">
+	<attrib name="call_id"/>
+	<attrib name="cdr_offset"/>
+	<attrib name="cdr_time"/>
+      </order>
+    </query>
+
+    <query name="clearRaw" type="delete" table="CDR_Raw">
+      <in>
+        <param type="std::list<std::string>" name="keys">
+      </in>
+      <condition>
+	<equal attrib="commited" value="1"/>
+        <in-seq attrib="call_id" param="keys"/>
+      </condition>
+    </query>
+
+  </repository>
+
+</model>
